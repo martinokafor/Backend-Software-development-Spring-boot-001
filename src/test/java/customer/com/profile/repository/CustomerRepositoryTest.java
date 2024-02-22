@@ -1,16 +1,12 @@
 package customer.com.profile.repository;
-
 import customer.com.profile.model.Customer;
-import customer.com.profile.model.Vehicle;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,8 +22,14 @@ class CustomerRepositoryTest {
     @Autowired
     private TestEntityManager testEntityManager;
 
-
-
+    Customer customer_one = Customer.builder().
+            customerName("Martin E").
+            city("dresden").
+            noOfVehicle(1).build();
+    Customer customer_two = Customer.builder().
+            customerName("Mart E").
+            city("berlin").
+            noOfVehicle(1).build();
 
     @BeforeEach
     void setUp() {
@@ -41,24 +43,17 @@ class CustomerRepositoryTest {
 
     @Test
     void findByCity() {
-        Customer customer_one = Customer.builder().
-                customerId(1).
-                customerName("Martin E").
-                city("dresden").
-                noOfVehicle(1).build();
-        Customer customer_two = Customer.builder().
-                customerId(20).
-                customerName("Mart E").
-                city("berlin").
-                noOfVehicle(1).build();
-
-        Customer persist = testEntityManager.persist(customer_one);
-        List<Customer> customers = new ArrayList<>(Arrays.asList(customer_one));
+        Customer persistCustomer = testEntityManager.persist(customer_one);
+        List<Customer> persistedCustomer = new ArrayList<>(Arrays.asList(persistCustomer));
         List <Customer> customer = customerRepository.findByCity(customer_one.getCity());
-        assertEquals(customer, customers);
+        assertEquals(customer, persistedCustomer);
     }
 
     @Test
     void findByCustomerName() {
+        Customer persistCustomer = testEntityManager.persist(customer_two);
+        List<Customer> persistedCustomer = new ArrayList<>(Arrays.asList(persistCustomer));
+        List <Customer> customer = customerRepository.findByCustomerName(customer_two.getCustomerName());
+        assertEquals(customer, persistedCustomer);
     }
 }
