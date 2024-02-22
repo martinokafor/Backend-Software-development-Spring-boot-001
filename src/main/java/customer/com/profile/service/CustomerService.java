@@ -37,8 +37,9 @@ public class CustomerService {
         return customer;
     }
 
-    public void deleteCustomer(Integer customerId){
+    public double deleteCustomer(Integer customerId){
         customerRepository.deleteById(customerId);
+        return 0;
     }
 
     public List<Customer> findByCity(String city){

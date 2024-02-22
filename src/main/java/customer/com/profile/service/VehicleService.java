@@ -48,8 +48,9 @@ public class VehicleService {
         return vehicleRepository.findByCustomerId(customerId).size();
     }
 
-    public void deleteVehicleByVin(String vin){
+    public Integer deleteVehicleByVin(String vin){
         vehicleRepository.deleteById(vin);
+        return 0;
     }
 
 }
