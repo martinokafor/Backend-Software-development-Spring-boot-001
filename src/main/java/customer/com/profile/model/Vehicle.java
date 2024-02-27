@@ -17,7 +17,7 @@ public class Vehicle {
     @GeneratedValue(strategy= GenerationType.UUID)
     private String vin;
     private String model;
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
     @JoinColumn(name = "customer_id", referencedColumnName = "customerId")
     private Customer customer;
 }

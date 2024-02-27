@@ -23,15 +23,19 @@ class CustomerServiceTest {
     @Autowired
     private CustomerService customerService;
 
-    Customer customer_one = Customer.builder().
+    private final String FIRST_CUSTOMER_NAME = "Martin E";
+    private final String SECOND_CUSTOMER_NAME = "Martin Eme";
+    private final String FIRST_CUSTOMER_CITY = "dresden";
+    private final String SECOND_CUSTOMER_CITY = "dresden";
+    Customer firstCustomer = Customer.builder().
             customerId(1).
-            customerName("Martin E").
-            city("dresden").
+            customerName(FIRST_CUSTOMER_NAME).
+            city(FIRST_CUSTOMER_CITY).
             noOfVehicle(1).build();
-    Customer customer_two = Customer.builder().
+    Customer secondCustomer = Customer.builder().
             customerId(20).
-            customerName("Mart E").
-            city("berlin").
+            customerName(SECOND_CUSTOMER_NAME).
+            city(SECOND_CUSTOMER_CITY).
             noOfVehicle(1).build();
 
 
@@ -46,43 +50,46 @@ class CustomerServiceTest {
 
     @Test
     void fetchAllCustomers() {
-
-        List<Customer> customers = new ArrayList<>(Arrays.asList(customer_one, customer_two));
+        List<Customer> customers = new ArrayList<>(Arrays.asList(firstCustomer, secondCustomer));
         Mockito.when(customerRepository.findAll()).thenReturn(customers);
         assertEquals(customerService.fetchAllCustomers(), customers);
+        assertEquals(customerService.fetchAllCustomers().size(), 2);
     }
 
     @Test
     void createCustomer() {
-        Mockito.when(customerRepository.save(customer_one)).thenReturn(customer_one);
-        assertEquals(customerService.CreateCustomer(customer_one), customer_one);
+        Mockito.when(customerRepository.save(firstCustomer)).thenReturn(firstCustomer);
+        Customer customer = customerService.CreateCustomer(firstCustomer);
+        assertEquals(customer, firstCustomer);
+        assertEquals(customer.getCustomerName(), firstCustomer.getCustomerName());
     }
 
     @Test
     void getCustomer() {
         Mockito.when(
                 customerRepository.findById(
-                        customer_one.getCustomerId())).thenReturn(Optional.ofNullable(customer_one));
-        assertEquals(customerService.getCustomer(customer_one.getCustomerId()), customer_one);
+                        firstCustomer.getCustomerId())).thenReturn(Optional.ofNullable(firstCustomer));
+        Customer customer = customerService.getCustomer(firstCustomer.getCustomerId());
+        assertEquals(customer, firstCustomer);
     }
 
     @Test
     void deleteCustomer() {
-        assertEquals(customerService.deleteCustomer(customer_two.getCustomerId()), 0);
-        System.out.println(customer_two.getCustomerId());
+        assertEquals(customerService.deleteCustomer(firstCustomer.getCustomerId()), 0);
     }
 
     @Test
     void findByCity() {
-        List<Customer> customer = new ArrayList<>(Arrays.asList(customer_one));
-        Mockito.when(customerRepository.findByCity("dresden")).thenReturn(customer);
-        assertEquals(customerService.findByCity("dresden"), customer);
+        List<Customer> customer = new ArrayList<>(Arrays.asList(firstCustomer, secondCustomer));
+        Mockito.when(customerRepository.findByCity(firstCustomer.getCity())).thenReturn(customer);
+        assertEquals(customerService.findByCity(firstCustomer.getCity()), customer);
+        assertEquals(customerService.findByCity(firstCustomer.getCity()).size(), 2);
     }
 
     @Test
     void findByCustomerName() {
-        List<Customer> customer = new ArrayList<>(Arrays.asList(customer_one));
-        Mockito.when(customerRepository.findByCustomerName("Martin E")).thenReturn(customer);
-        assertEquals(customerService.findByCustomerName("Martin E"), customer);
+        List<Customer> customer = new ArrayList<>(Arrays.asList(firstCustomer));
+        Mockito.when(customerRepository.findByCustomerName(firstCustomer.getCustomerName())).thenReturn(customer);
+        assertEquals(customerService.findByCustomerName(firstCustomer.getCustomerName()), customer);
     }
 }

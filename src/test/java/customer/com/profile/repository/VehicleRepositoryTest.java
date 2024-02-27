@@ -25,26 +25,30 @@ class VehicleRepositoryTest {
     @Autowired
     private VehicleRepository vehicleRepository;
 
+    private final String CUSTOMER_NAME = "Martin E";
+    private final String CUSTOMER_CITY = "dresden";
+    private final String FIRST_VEHICLE_NAME = "Honda";
+    private final String FIRST_VEHICLE_MODEL = "accord";
+    private final String SECOND_VEHICLE_NAME = "Honda";
+    private final String SECOND_VEHICLE_MODEL = "accord";
 
     Customer customer = Customer.builder().
-            customerName("Martin E").
-            city("dresden").
+            customerName(CUSTOMER_NAME).
+            city(CUSTOMER_CITY).
             noOfVehicle(1).
             build();
-    Vehicle vehicle_one = Vehicle.builder().
-            vehicleName("honda").
-            model("accord").
+    Vehicle firstVehicle = Vehicle.builder().
+            vehicleName(FIRST_VEHICLE_NAME).
+            model(FIRST_VEHICLE_MODEL).
             customer(customer).
             build();
 
-    Vehicle vehicle_two = Vehicle.builder().
-            vehicleName("volkswagen").
+    Vehicle secondVehicle = Vehicle.builder().
+            vehicleName(SECOND_VEHICLE_NAME).
             customer(customer).
-            model("touareg").
+            model(SECOND_VEHICLE_MODEL).
             build();
 
-
-    List<Vehicle> vehicles = new ArrayList<>(Arrays.asList(vehicle_one, vehicle_two));
 
     @BeforeEach
     void setUp() {
@@ -56,25 +60,36 @@ class VehicleRepositoryTest {
 
     @Test
     void findAllByVehicleName() {
-        Vehicle persistVehicle = testEntityManager.persist(vehicle_one);
-        List<Vehicle> persistedVehicle = new ArrayList<>(Arrays.asList(persistVehicle));
-        List <Vehicle> vehicle = vehicleRepository.findAllByVehicleName(vehicle_one.getVehicleName());
-        assertEquals(persistedVehicle, vehicle);
+        testEntityManager.persist(customer);
+        Vehicle firstPersistedVehicle = testEntityManager.persist(firstVehicle);
+        Vehicle secondPersistedVehicle = testEntityManager.persist(secondVehicle);
+        List<Vehicle> persistedVehicleList = new ArrayList<>(Arrays.asList(
+                firstPersistedVehicle,
+                secondPersistedVehicle
+        ));
+        List <Vehicle> vehicle = vehicleRepository.findAllByVehicleName(firstVehicle.getVehicleName());
+        assertEquals(vehicle.size(), 2);
+        assertEquals(persistedVehicleList, vehicle);
     }
 
     @Test
     void findByModel() {
-        Vehicle persistVehicle = testEntityManager.persist(vehicle_two);
-        List<Vehicle> persistedVehicle = new ArrayList<>(Arrays.asList(persistVehicle));
-        List <Vehicle> vehicle = vehicleRepository.findByModel(vehicle_two.getModel());
-        assertEquals(persistedVehicle, vehicle);
+        testEntityManager.persist(customer);
+        Vehicle persistedVehicle = testEntityManager.persist(secondVehicle);
+        List<Vehicle> persistedVehicleList = new ArrayList<>(Arrays.asList(persistedVehicle));
+        List <Vehicle> vehicleList = vehicleRepository.findByModel(secondVehicle.getModel());
+        assertEquals(persistedVehicleList, vehicleList);
+        assertEquals(vehicleList.size(), 1);
+        assertEquals(vehicleList.get(0).getModel(), SECOND_VEHICLE_MODEL);
     }
 
     @Test
     void findByCustomerId() {
-        Customer persistCustomer = testEntityManager.persist(customer);
-        //List<Vehicle> persistedVehicle = new ArrayList<>(Arrays.asList(persistCustomer));
-        List <Vehicle> persistedVehicle = vehicleRepository.findByCustomerId(customer.getCustomerId());
-        assertNotNull(persistedVehicle);
+        Customer persistedCustomer = testEntityManager.persist(customer);
+        Vehicle persistedVehicle = testEntityManager.persist(secondVehicle);
+        List <Vehicle> persistedVehicleList = vehicleRepository.findByCustomerId(persistedCustomer.getCustomerId());
+        assertNotNull(persistedVehicleList);
+        assertEquals(persistedVehicleList.size(), 1);
+        assertEquals(persistedVehicleList.get(0).getCustomer(), persistedCustomer);
     }
 }

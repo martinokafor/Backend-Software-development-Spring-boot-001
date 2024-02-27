@@ -22,19 +22,22 @@ class CustomerRepositoryTest {
     @Autowired
     private TestEntityManager testEntityManager;
 
-    Customer customer_one = Customer.builder().
-            customerName("Martin E").
-            city("dresden").
+    private final String FIRST_CUSTOMER_NAME = "Martin E";
+    private final String SECOND_CUSTOMER_NAME = "Martin Eme";
+    private final String FIRST_CUSTOMER_CITY = "dresden";
+    private final String SECOND_CUSTOMER_CITY = "berlin";
+
+    Customer firstCustomer = Customer.builder().
+            customerName(FIRST_CUSTOMER_NAME).
+            city(FIRST_CUSTOMER_CITY).
             noOfVehicle(1).build();
-    Customer customer_two = Customer.builder().
-            customerName("Mart E").
-            city("berlin").
+    Customer secondCustomer = Customer.builder().
+            customerName(SECOND_CUSTOMER_NAME).
+            city(SECOND_CUSTOMER_CITY).
             noOfVehicle(1).build();
 
     @BeforeEach
     void setUp() {
-
-
     }
 
     @AfterEach
@@ -43,17 +46,21 @@ class CustomerRepositoryTest {
 
     @Test
     void findByCity() {
-        Customer persistCustomer = testEntityManager.persist(customer_one);
-        List<Customer> persistedCustomer = new ArrayList<>(Arrays.asList(persistCustomer));
-        List <Customer> customer = customerRepository.findByCity(customer_one.getCity());
-        assertEquals(customer, persistedCustomer);
+        Customer persistedCustomer = testEntityManager.persist(firstCustomer);
+        List<Customer> persistedCustomerList = new ArrayList<>(Arrays.asList(persistedCustomer));
+        List<Customer> customer = customerRepository.findByCity(firstCustomer.getCity());
+        assertEquals(customer, persistedCustomerList);
+        assertEquals(customer.size(), 1);
+        assertEquals(customer.get(0).getCity(), FIRST_CUSTOMER_CITY);
     }
 
     @Test
     void findByCustomerName() {
-        Customer persistCustomer = testEntityManager.persist(customer_two);
-        List<Customer> persistedCustomer = new ArrayList<>(Arrays.asList(persistCustomer));
-        List <Customer> customer = customerRepository.findByCustomerName(customer_two.getCustomerName());
-        assertEquals(customer, persistedCustomer);
+        Customer persistedCustomer = testEntityManager.persist(secondCustomer);
+        List<Customer> persistedCustomerList = new ArrayList<>(Arrays.asList(persistedCustomer));
+        List <Customer> customer = customerRepository.findByCustomerName(secondCustomer.getCustomerName());
+        assertEquals(customer, persistedCustomerList);
+        assertEquals(customer.size(), 1);
+        assertEquals(customer.get(0).getCustomerName(), SECOND_CUSTOMER_NAME);
     }
 }

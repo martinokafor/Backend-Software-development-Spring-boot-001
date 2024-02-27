@@ -25,20 +25,32 @@ class VehicleServiceTest {
     @Autowired
     private VehicleService vehicleService;
 
-    Vehicle vehicle_one = Vehicle.builder().
-            vehicleName("honda").
-            vin("6c628184-bb2a-4114-bc71-a3dc328d7136").
-            model("accord").build();
-    Vehicle vehicle_two = Vehicle.builder().
-            vehicleName("volkswagen").
-            vin("3dfb857f-9dff-46c6-a024-6d8c86f323a5").
-            model("touareg").build();
+    private final String CUSTOMER_NAME = "Martin E";
+    private final String CUSTOMER_CITY = "dresden";
+    private final String FIRST_VEHICLE_NAME = "Honda";
+    private final String FIRST_VEHICLE_MODEL = "accord";
+    private final String FIRST_VEHICLE_VIN = "6c628184-bb2a-4114-bc71-a3dc328d7136";
+    private final String SECOND_VEHICLE_NAME = "Honda";
+    private final String SECOND_VEHICLE_MODEL = "accord";
+    private final String SECOND_VEHICLE_VIN = "3dfb857f-9dff-46c6-a024-6d8c86f323a5";
+
     Customer customer = Customer.builder().
             customerId(1).
-            customerName("Martin E").
-            city("dresden").
+            customerName(CUSTOMER_NAME).
+            city(CUSTOMER_CITY).
             noOfVehicle(1).build();
-    List<Vehicle> vehicles = new ArrayList<>(Arrays.asList(vehicle_one, vehicle_two));
+    Vehicle firstVehicle = Vehicle.builder().
+            vehicleName(FIRST_VEHICLE_NAME).
+            vin(FIRST_VEHICLE_VIN).
+            customer(customer).
+            model(FIRST_VEHICLE_MODEL).build();
+    Vehicle secondVehicle = Vehicle.builder().
+            vehicleName(SECOND_VEHICLE_NAME ).
+            vin(SECOND_VEHICLE_VIN).
+            customer(customer).
+            model(SECOND_VEHICLE_MODEL).build();
+
+    List<Vehicle> vehicles = new ArrayList<>(Arrays.asList(firstVehicle, secondVehicle));
 
     @BeforeEach
     void setUp() {
@@ -53,36 +65,41 @@ class VehicleServiceTest {
     void fetchAllVehicles() {
         Mockito.when(vehicleRepository.findAll()).thenReturn(vehicles);
         assertEquals(vehicleService.fetchAllVehicles(), vehicles);
+        assertEquals(vehicles.size(),2);
     }
 
     @Test
     void createVehicle() {
-        Mockito.when(vehicleRepository.save(vehicle_one)).thenReturn(vehicle_one);
-        assertEquals(vehicleRepository.save(vehicle_one), vehicle_one);
+        Mockito.when(vehicleRepository.save(firstVehicle)).thenReturn(firstVehicle);
+        assertEquals(vehicleRepository.save(firstVehicle), firstVehicle);
     }
 
     @Test
     void getVehicle() {
-        Mockito.when(vehicleRepository.findById(vehicle_one.getVin())).thenReturn(Optional.ofNullable(vehicle_one));
-        assertEquals(vehicleService.getVehicle(vehicle_one.getVin()), vehicle_one);
+        Mockito.when(vehicleRepository.findById(firstVehicle.getVin())).thenReturn(Optional.ofNullable(firstVehicle));
+        assertEquals(vehicleService.getVehicle(firstVehicle.getVin()), firstVehicle);
+        assertNotEquals(vehicleService.getVehicle(firstVehicle.getVin()), secondVehicle);
     }
 
     @Test
     void findAllByVehicleName() {
-        Mockito.when(vehicleRepository.findAllByVehicleName(vehicle_one.getVehicleName())).thenReturn(vehicles);
-        assertEquals(vehicleService.findAllByVehicleName(vehicle_one.getVehicleName()), vehicles);
+        Mockito.when(vehicleRepository.findAllByVehicleName(firstVehicle.getVehicleName())).thenReturn(vehicles);
+        assertEquals(vehicleService.findAllByVehicleName(firstVehicle.getVehicleName()), vehicles);
+        assertEquals(vehicles.size(),2);
     }
 
     @Test
     void findByModel() {
-        Mockito.when(vehicleRepository.findByModel(vehicle_one.getModel())).thenReturn(vehicles);
-        assert vehicleService.findByModel(vehicle_one.getModel()) == vehicles;
+        Mockito.when(vehicleRepository.findByModel(firstVehicle.getModel())).thenReturn(vehicles);
+        assert vehicleService.findByModel(firstVehicle.getModel()) == vehicles;
+        assertEquals(vehicles.size(),2);
     }
 
     @Test
     void findVehiclesByCustomerId() {
         Mockito.when(vehicleRepository.findByCustomerId(customer.getCustomerId())).thenReturn(vehicles);
         assert vehicleService.findVehiclesByCustomerId(customer.getCustomerId()) == vehicles;
+        assertEquals(vehicles.size(),2);
     }
 
     @Test
@@ -93,6 +110,6 @@ class VehicleServiceTest {
 
     @Test
     void deleteVehicleByVin() {
-        assert vehicleService.deleteVehicleByVin(vehicle_one.getVin()) == 0;
+        assert vehicleService.deleteVehicleByVin(firstVehicle.getVin()) == 0;
     }
 }
