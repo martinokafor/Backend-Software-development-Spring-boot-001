@@ -44,6 +44,15 @@ public class VehicleService {
         return vehicleRepository.findByCustomerId(customerId);
     }
 
+    public Vehicle updateVehicle(Vehicle vehicle, String vin){
+        vehicle.setCustomer(vehicle.getCustomer());
+        vehicleRepository.findById(vin).get();
+        vehicle.setVehicleName(vehicle.getVehicleName());
+        vehicle.setModel(vehicle.getModel());
+        vehicle.setCreatedOn(vehicleRepository.findById(vin).get().getCreatedOn());
+        return vehicleRepository.save(vehicle);
+    }
+
     public Integer countVehiclesByCustomerId(Integer customerId){
         return vehicleRepository.findByCustomerId(customerId).size();
     }

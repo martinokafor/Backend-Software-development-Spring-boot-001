@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Getter
 @Configuration
 @EnableConfigurationProperties
-@ConfigurationProperties("spring-test.vehicles")
+@ConfigurationProperties("spring.spring-test.vehicles")
 public class VehicleConfig {
     public String maxNoOfVehicles;
     public boolean enabled;

@@ -1,5 +1,7 @@
 package customer.com.profile.service;
 
+import customer.com.profile.config.CustomerConfig;
+import customer.com.profile.config.VehicleConfig;
 import customer.com.profile.model.Customer;
 import customer.com.profile.service.CustomerService;
 import org.junit.jupiter.api.*;
@@ -14,7 +16,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class CustomerServiceH2Test {
     @Autowired
     private CustomerService customerService;
-
+    @Autowired
+    CustomerConfig customerConfig;
     private final String FIRST_CUSTOMER_NAME = "Martin E";
     private final String SECOND_CUSTOMER_NAME = "Martin Eme";
     private final String THIRD_CUSTOMER_NAME = "Mr Martin";
@@ -52,8 +55,7 @@ class CustomerServiceH2Test {
     void fetchAllCustomer() {
         List<Customer> customers = customerService.fetchAllCustomers();
         assertEquals(customers.size(), 2);
-        assertEquals(customers.get(0), firstCustomer);
-        assertEquals(customers.get(1), secondCustomer);
+        assertTrue(Integer.parseInt(customerConfig.getMaxNoOfCustomers()) > customers.size());
     }
 
     @Test

@@ -11,7 +11,7 @@ import lombok.*;
 @Builder
 @Table(name = "vehicle")
 @Entity
-public class Vehicle {
+public class Vehicle extends AbstractEntity{
     private String vehicleName;
     @Id
     @GeneratedValue(strategy= GenerationType.UUID)

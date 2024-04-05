@@ -12,7 +12,7 @@ import lombok.*;
 @Entity
 @Builder
 @Table(name = "customer")
-public class Customer {
+public class Customer extends AbstractEntity{
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
