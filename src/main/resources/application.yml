@@ -1,4 +1,4 @@
-spring1:
+spring:
   config:
     activate:
       on-profile: mysql
