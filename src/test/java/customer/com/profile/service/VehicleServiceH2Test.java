@@ -1,5 +1,6 @@
 package customer.com.profile.service;
 
+import customer.com.profile.config.VehicleConfig;
 import customer.com.profile.model.Customer;
 import customer.com.profile.model.Vehicle;
 import customer.com.profile.service.CustomerService;
@@ -21,6 +22,8 @@ public class VehicleServiceH2Test {
     private VehicleService vehicleService;
     @Autowired
     private CustomerService customerService;
+    @Autowired
+    VehicleConfig vehicleConfig;
 
     private final String CUSTOMER_NAME = "Martin E";
     private final String CUSTOMER_CITY = "dresden";
@@ -61,6 +64,7 @@ public class VehicleServiceH2Test {
     void fetchAllVehicle() {
         List <Vehicle> vehicles = vehicleService.fetchAllVehicles();
         assertNotNull(vehicles);
+        assertTrue(Integer.parseInt(vehicleConfig.getMaxNoOfVehicles()) > vehicles.size());
     }
 
     @Test

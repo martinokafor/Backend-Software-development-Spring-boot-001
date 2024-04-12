@@ -11,13 +11,20 @@ spring:
       ddl-auto: update
     show-sql: true
   enabled: true
+  spring-test:
+    vehicles:
+      maxNoOfVehicles: 20
+      enabled: true
+    customers:
+      maxNoOfCustomers: 20
+      enabled: true
 
 ---
 
 spring:
   config:
     activate:
-      on-profile: default
+      on-profile: h2
   h2:
     console:
       enabled: true
@@ -31,16 +38,20 @@ spring:
         persistence:
           validation:
             mode: none
+  spring-test:
+    vehicles:
+      maxNoOfVehicles: 20
+      enabled: true
+    customers:
+      maxNoOfCustomers: 20
+      enabled: true
+
+server:
+    port: 8080
 
 ---
-
-spring-test:
-  vehicles:
-    maxNoOfVehicles: 20
-    enabled: true
-  customers:
-    maxNoOfCustomers: 20
-    enabled: true
-
-
-
+logging:
+  level:
+    com:
+      zaxxer:
+        hikari: TRACE

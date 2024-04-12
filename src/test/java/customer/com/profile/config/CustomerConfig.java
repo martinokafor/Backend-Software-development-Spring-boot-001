@@ -8,13 +8,13 @@ import org.springframework.context.annotation.Configuration;
 @Getter
 @Configuration
 @EnableConfigurationProperties
-@ConfigurationProperties("spring-test.vehicles")
+@ConfigurationProperties("spring.spring-test.customers")
 public class CustomerConfig {
     public String maxNoOfCustomers;
     public boolean enabled;
 
-    public void setMaxNoOfVehicles(String maxNoOfVehicles) {
-        this.maxNoOfCustomers = maxNoOfVehicles;
+    public void setMaxNoOfCustomers(String maxNoOfCustomers) {
+        this.maxNoOfCustomers = maxNoOfCustomers;
     }
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;

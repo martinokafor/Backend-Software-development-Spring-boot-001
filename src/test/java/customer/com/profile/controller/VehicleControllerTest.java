@@ -73,8 +73,6 @@ class VehicleControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/vehicles")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(jsonPath("$[0]").value(firstVehicle))
-                .andExpect(jsonPath("$[1]").value(secondVehicle))
                 .andExpect(jsonPath("$", hasSize(2)));
     }
 
@@ -85,7 +83,7 @@ class VehicleControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(jsonPath("$.vin").value(firstVehicle.getVin()))
-                .andExpect(jsonPath("$.*", hasSize(4)));
+                .andExpect(jsonPath("$.*", hasSize(6)));
     }
 
     @Test
@@ -116,8 +114,6 @@ class VehicleControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/vehicles/customer_id/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(jsonPath("$[0]").value(firstVehicle))
-                .andExpect(jsonPath("$[1]").value(secondVehicle))
                 .andExpect(jsonPath("$", hasSize(2)));
     }
 

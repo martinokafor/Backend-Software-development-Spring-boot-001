@@ -1,5 +1,11 @@
 package customer.com.profile.controller;
 
+import com.opencsv.CSVWriter;
+import com.opencsv.bean.StatefulBeanToCsv;
+import com.opencsv.bean.StatefulBeanToCsvBuilder;
+import com.opencsv.exceptions.CsvDataTypeMismatchException;
+import com.opencsv.exceptions.CsvException;
+import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import customer.com.profile.config.ApiError;
 import customer.com.profile.model.Customer;
 import customer.com.profile.service.CustomerService;
@@ -7,12 +13,18 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 
 @RestController
@@ -312,5 +324,21 @@ public class CustomerController {
         }catch(Exception e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+    @GetMapping("/customer/download_customers")
+    public void exportCSV(HttpServletResponse response) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
+        String fileName = "customer_data.csv";
+        response.setContentType("text/csv");
+        response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "");
+        StatefulBeanToCsv<Customer> writer = new StatefulBeanToCsvBuilder<Customer>(response.getWriter())
+                .withSeparator(CSVWriter.DEFAULT_SEPARATOR)
+                .withOrderedResults(true)
+                .build();
+        writer.write(customerService.fetchAllCustomers());
+    }
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(value = "/customer/upload_customers", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public void uploadCsv(@RequestParam MultipartFile file) throws IOException, CsvException, NumberFormatException {
+        customerService.uploadCustomer(file);
     }
 }

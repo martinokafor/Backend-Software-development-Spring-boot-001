@@ -106,7 +106,7 @@ public class VehicleController {
             summary = "Create a vehicle for a customer",
             responses = {@ApiResponse(
                     description = "Success",
-                    responseCode = "200"
+                    responseCode = "201"
             ),
                     @ApiResponse(
                             description = "Bad request",
@@ -139,6 +139,49 @@ public class VehicleController {
     public ResponseEntity<Vehicle> createVehicle(@RequestBody Vehicle vehicle, @PathVariable Integer customerId){
         try{
             return new ResponseEntity<Vehicle>(vehicleService.CreateVehicle(vehicle, customerId), HttpStatus.CREATED);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Operation(
+            description = "Update a vehicle using vin",
+            summary = "Update a vehicle using vin to fetch the vehicle",
+            responses = {@ApiResponse(
+                    description = "Success",
+                    responseCode = "200"
+            ),
+                    @ApiResponse(
+                            description = "Bad request",
+                            responseCode = "400",
+                            content =
+                            @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = ApiError.class))
+
+                    ),
+                    @ApiResponse(
+                            description = "Unauthorized",
+                            responseCode = "401",
+                            content =
+                            @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = ApiError.class))
+                    ),
+                    @ApiResponse(
+                            description = "Internal server error",
+                            responseCode = "500",
+                            content =
+                            @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = ApiError.class))
+                    ),
+            }
+    )
+    @PutMapping("/vehicle/{vin}")
+    public ResponseEntity<Vehicle> updateVehicle(@RequestBody Vehicle vehicle, @PathVariable String vin){
+        try{
+            return new ResponseEntity<Vehicle>(vehicleService.updateVehicle(vehicle, vin), HttpStatus.OK);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
