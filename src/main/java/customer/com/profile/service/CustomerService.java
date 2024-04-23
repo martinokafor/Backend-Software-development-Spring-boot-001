@@ -8,6 +8,10 @@ import customer.com.profile.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.http.MediaType;
+import java.util.Arrays;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -24,6 +28,8 @@ public class CustomerService {
     CustomerRepository customerRepository;
     @Autowired
     VehicleRepository vehicleRepository;
+    @Autowired
+    WebClient webClient;
 
     private final String FILE_PATH = "C:\\E2E\\Backend-Software-development-Spring-boot-001\\";
 
@@ -83,5 +89,32 @@ public class CustomerService {
             customer.setUpdatedOn(Instant.parse(row[5]));
             customerRepository.save(customer);
         }
+    }
+    public Object[] consumeCustomerProducers(){
+
+        Object[] customer = webClient.get()
+                .uri("http://localhost:8084/customer_producers")
+                .retrieve()
+                .bodyToMono(Object[].class)
+                .block();
+
+        System.out.println(Arrays.stream((customer)).toList());
+        System.out.println("request was sent");
+        return customer;
+    }
+    public Object produceCustomerProducers(Customer customer){
+
+        Object customerResponse = webClient.post()
+                .uri("http://localhost:8084/customer_producer")
+                .header("Content-Type", "application/json")
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(BodyInserters.fromValue(customer))
+                .retrieve()
+                .bodyToMono(Object.class)
+                .block();
+
+        System.out.println(customerResponse);
+        System.out.println("request was sent");
+        return customerResponse;
     }
 }
