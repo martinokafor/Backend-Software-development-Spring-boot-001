@@ -341,4 +341,12 @@ public class CustomerController {
     public void uploadCsv(@RequestParam MultipartFile file) throws IOException, CsvException, NumberFormatException {
         customerService.uploadCustomer(file);
     }
+    @GetMapping("/customer_producers")
+    public Object consumeCustomerProducer(){
+        return customerService.consumeCustomerProducers();
+    }
+    @PostMapping("/customer_producer")
+    public Object produceCustomerProducer(@RequestBody Customer customer){
+        return customerService.produceCustomerProducers(customer);
+    }
 }
