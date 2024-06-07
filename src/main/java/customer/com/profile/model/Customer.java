@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import org.springframework.validation.annotation.Validated;
+import org.hibernate.envers.Audited;
 
 @Getter
 @Setter
@@ -15,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 @Data
 @Entity
 @Builder
+@Audited
 @Table(name = "customer")
 public class Customer extends AbstractEntity{
 
