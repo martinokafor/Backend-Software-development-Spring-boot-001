@@ -2,11 +2,10 @@ package customer.com.profile.model;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.springframework.validation.annotation.Validated;
 import org.hibernate.envers.Audited;
 
 @Getter
@@ -30,6 +29,7 @@ public class Customer extends AbstractEntity{
     @NonNull
     @NotEmpty
     @NotBlank
+    @Size(min = 2, message = "city must be at least 2 characters")
     private String city;
     @Nullable
     private Integer noOfVehicle;
