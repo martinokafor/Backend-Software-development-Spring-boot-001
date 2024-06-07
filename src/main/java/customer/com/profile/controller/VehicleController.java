@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -140,7 +141,7 @@ public class VehicleController {
             }
     )
     @PostMapping("/vehicle/customer/{customerId}")
-    public ResponseEntity<Vehicle> createVehicle(@RequestBody Vehicle vehicle, @PathVariable Integer customerId){
+    public ResponseEntity<Vehicle> createVehicle(@Valid @RequestBody Vehicle vehicle, @PathVariable Integer customerId){
         try{
             return new ResponseEntity<Vehicle>(vehicleService.CreateVehicle(vehicle, customerId), HttpStatus.CREATED);
         } catch (Exception e) {
@@ -183,7 +184,7 @@ public class VehicleController {
             }
     )
     @PutMapping("/vehicle/{vin}")
-    public ResponseEntity<Vehicle> updateVehicle(@RequestBody Vehicle vehicle, @PathVariable String vin){
+    public ResponseEntity<Vehicle> updateVehicle(@Valid @RequestBody Vehicle vehicle, @PathVariable String vin){
         try{
             return new ResponseEntity<Vehicle>(vehicleService.updateVehicle(vehicle, vin), HttpStatus.OK);
         } catch (Exception e) {
