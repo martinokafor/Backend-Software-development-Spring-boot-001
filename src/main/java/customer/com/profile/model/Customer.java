@@ -3,6 +3,7 @@ package customer.com.profile.model;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.envers.Audited;
 
 @Getter
 @Setter
@@ -11,6 +12,7 @@ import lombok.*;
 @Data
 @Entity
 @Builder
+@Audited
 @Table(name = "customer")
 public class Customer extends AbstractEntity{
 
