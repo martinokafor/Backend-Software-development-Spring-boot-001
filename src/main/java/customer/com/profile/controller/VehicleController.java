@@ -54,8 +54,12 @@ public class VehicleController {
             }
     )
     @GetMapping("/vehicles")
-    public List<Vehicle> fetchAllVehicle(){
-        return vehicleService.fetchAllVehicles();
+    public List<Vehicle> fetchAllVehicle() {
+        try{
+            return vehicleService.fetchAllVehicles();
+        }catch(Exception e){
+            throw new RuntimeException(e);
+        }
     }
 
     @Operation(
@@ -222,8 +226,12 @@ public class VehicleController {
             }
     )
     @GetMapping("/vehicle/vehicle_name/{vehicleName}")
-    public List<Vehicle> findVehicleByName(@PathVariable String vehicleName){
-        return vehicleService.findAllByVehicleName(vehicleName);
+    public ResponseEntity<List<Vehicle>> findVehicleByName(@PathVariable String vehicleName){
+        try {
+            return new ResponseEntity<>(vehicleService.findAllByVehicleName(vehicleName), HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @Operation(
@@ -261,8 +269,12 @@ public class VehicleController {
             }
     )
     @GetMapping("/vehicle/model/{model}")
-    public List<Vehicle> findByModel(@PathVariable String model){
-        return vehicleService.findByModel(model);
+    public ResponseEntity<List<Vehicle>> findByModel(@PathVariable String model){
+        try {
+            return new ResponseEntity<>(vehicleService.findByModel(model), HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @Operation(
@@ -300,8 +312,12 @@ public class VehicleController {
             }
     )
     @GetMapping("/vehicles/customer_id/{customerId}")
-    public List<Vehicle> findVehiclesByCustomerId(@PathVariable Integer customerId){
-        return vehicleService.findVehiclesByCustomerId(customerId);
+    public ResponseEntity<List<Vehicle>> findVehiclesByCustomerId(@PathVariable Integer customerId){
+        try {
+            return new ResponseEntity<>(vehicleService.findVehiclesByCustomerId(customerId), HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @Operation(
@@ -339,8 +355,12 @@ public class VehicleController {
             }
     )
     @GetMapping("/vehicles/{customerId}")
-    public Integer countVehiclesByCustomerId(@PathVariable Integer customerId){
-        return vehicleService.countVehiclesByCustomerId(customerId);
+    public ResponseEntity<Integer> countVehiclesByCustomerId(@PathVariable Integer customerId){
+        try {
+            return new ResponseEntity<>(vehicleService.countVehiclesByCustomerId(customerId), HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @Operation(
@@ -380,8 +400,7 @@ public class VehicleController {
     @DeleteMapping("/vehicle/{vin}")
     public void deleteCustomer(@PathVariable String vin){
         try {
-            vehicleService.deleteVehicleByVin(vin);
-            new ResponseEntity<>(HttpStatus.OK);
+            new ResponseEntity<>(vehicleService.deleteVehicleByVin(vin), HttpStatus.OK);
         }catch (Exception e){
             new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

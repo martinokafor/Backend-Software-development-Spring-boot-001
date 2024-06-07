@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -67,8 +68,12 @@ public class CustomerController {
           }
   )
     @GetMapping("/customers")
-    public List<Customer> fetchAllCustomer(){
-        return customerService.fetchAllCustomers();
+    public ResponseEntity<List<Customer>> fetchAllCustomer(){
+      try{
+          return new ResponseEntity<List<Customer>>(customerService.fetchAllCustomers(), HttpStatus.OK);
+      }catch(Exception e){
+          throw new RuntimeException(e);
+      }
     }
 
     @Operation(
@@ -149,7 +154,7 @@ public class CustomerController {
             }
     )
     @PostMapping("/customer")
-    public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer){
+    public ResponseEntity<Customer> createCustomer(@Valid @RequestBody Customer customer){
         try{
             return new ResponseEntity<Customer>(customerService.CreateCustomer(customer), HttpStatus.CREATED);
         } catch (Exception e) {
@@ -192,8 +197,12 @@ public class CustomerController {
             }
     )
     @PutMapping("/customer/{customerId}")
-    public Customer updateCustomer(@RequestBody Customer customer, @PathVariable Integer customerId){
-        return customerService.updateCustomer(customer, customerId);
+    public ResponseEntity<Customer> updateCustomer(@Valid @RequestBody Customer customer, @PathVariable Integer customerId){
+      try{
+         return new ResponseEntity<>(customerService.updateCustomer(customer, customerId), HttpStatus.OK);
+      }catch(Exception e){
+          return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
     }
 
     @Operation(
@@ -343,10 +352,18 @@ public class CustomerController {
     }
     @GetMapping("/customer_producers")
     public Object consumeCustomerProducer(){
-        return customerService.consumeCustomerProducers();
+      try{
+          return new ResponseEntity<>(customerService.consumeCustomerProducers(), HttpStatus.OK);
+      }catch(Exception e){
+          return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
     }
     @PostMapping("/customer_producer")
     public Object produceCustomerProducer(@RequestBody Customer customer){
-        return customerService.produceCustomerProducers(customer);
+        try{
+            return new ResponseEntity<>(customerService.produceCustomerProducers(customer), HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

@@ -16,6 +16,7 @@ public class Vehicle extends AbstractEntity{
     @Id
     @GeneratedValue(strategy= GenerationType.UUID)
     private String vin;
+    @NonNull
     private String model;
     @ManyToOne(optional = false, cascade = CascadeType.MERGE)
     @JoinColumn(name = "customer_id", referencedColumnName = "customerId")
