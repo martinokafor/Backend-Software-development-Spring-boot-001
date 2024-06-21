@@ -1,7 +1,6 @@
 package customer.com.profile.controller;
 
 import customer.com.profile.model.AuthRequest;
-import customer.com.profile.model.User;
 import customer.com.profile.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,15 +16,17 @@ public class UserController {
     @Autowired
     private AuthenticationManager authenticationManager;
     @PostMapping("/authenticate")
-    public String generateToken(@RequestBody User user) throws Exception {
+    public String generateToken(@RequestBody AuthRequest authRequest) throws Exception {
         try {
             authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword())
+                    new UsernamePasswordAuthenticationToken(authRequest.getUserName(), authRequest.getPassword())
             );
         } catch (Exception ex) {
             throw new Exception(ex);
         }
+//        authenticationManager.authenticate(
+//                new UsernamePasswordAuthenticationToken(authRequest.getUserName(), authRequest.getPassword()));
 
-        return jwtUtil.generateToken(user.getUserName());
+        return jwtUtil.generateToken(authRequest.getUserName());
     }
 }

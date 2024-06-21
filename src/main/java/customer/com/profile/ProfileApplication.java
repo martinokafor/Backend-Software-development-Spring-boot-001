@@ -23,8 +23,9 @@ public class ProfileApplication {
 	@PostConstruct
 	public void initUsers(){
 		List<User> user= Stream.of(
-				new User(1, "name", "pwd"),
-				new User(2, "name1", "pwd1")
+				new User(1, "user", "pwd"),
+				new User(2, "user1", "pwd1"),
+				new User(3, "user2", "pwd2")
 		).collect(Collectors.toList());
 		userRepository.saveAll(user);
 		System.out.println(userRepository.findAll());
