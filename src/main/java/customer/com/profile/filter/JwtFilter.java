@@ -1,6 +1,7 @@
 package customer.com.profile.filter;
 
 
+import customer.com.profile.model.UserDetail;
 import customer.com.profile.service.CustomUserDetailsService;
 import customer.com.profile.util.JwtUtil;
 import jakarta.servlet.FilterChain;
@@ -11,13 +12,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -43,34 +49,19 @@ public class JwtFilter extends OncePerRequestFilter {
             token = authorizationHeader.substring(7);
             userName = jwtUtil.extractUsername(token);
         }
-        System.out.print("Security contextholder: " + SecurityContextHolder.getContext().getAuthentication());
 
         if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-//            UserDetails userDetails = service.loadUserByUsername(userName);
-            ArrayList allowedUser = new ArrayList();
-            allowedUser.add("user");
-            allowedUser.add("user1");
+            UserDetail userDetail = service.loadUserByUsername(userName);
 
-            if (allowedUser.contains(userName)){
-                UserDetails userDetails = service.loadUserByUsername(userName);
-                if (jwtUtil.validateToken(token, userDetails)) {
-
-                    UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                            new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                    usernamePasswordAuthenticationToken
-                            .setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
-                    SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-                }
-            }else{
-                System.out.println("The user does not have necessary permission");
-            };
-
-//            try {
-//
-//
-//            } catch (Exception e) {
-//                System.out.println("The user does not have necessary permission");
-//            }
+            if (jwtUtil.validateToken(token, userDetail)) {
+                System.out.println("authority:" + userDetail.getAuthorities());
+                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+                        new UsernamePasswordAuthenticationToken(userDetail, null, userDetail.getAuthorities());
+                usernamePasswordAuthenticationToken
+                        .setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
+                System.out.println(usernamePasswordAuthenticationToken);
+                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+            }
 
         }
         filterChain.doFilter(httpServletRequest, httpServletResponse);

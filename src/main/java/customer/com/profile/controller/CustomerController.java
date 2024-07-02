@@ -20,6 +20,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -153,6 +155,8 @@ public class CustomerController {
                     ),
             }
     )
+    //@PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/customer")
     public ResponseEntity<Customer> createCustomer(@Valid @RequestBody Customer customer){
         try{
@@ -196,6 +200,7 @@ public class CustomerController {
                     ),
             }
     )
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/customer/{customerId}")
     public ResponseEntity<Customer> updateCustomer(@Valid @RequestBody Customer customer, @PathVariable Integer customerId){
       try{
