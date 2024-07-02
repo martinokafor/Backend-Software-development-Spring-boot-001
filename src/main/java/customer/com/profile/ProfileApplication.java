@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.envers.repository.support.EnversRevisionRepositoryFactoryBean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -22,10 +23,11 @@ public class ProfileApplication {
 
 	@PostConstruct
 	public void initUsers(){
+
 		List<User> user= Stream.of(
-				new User(1, "user", "pwd"),
-				new User(2, "user1", "pwd1"),
-				new User(3, "user2", "pwd2")
+				new User(1, "user", "pwd", "ADMIN"),
+				new User(2, "user1", "pwd1", "admin"),
+				new User(3, "user2", "pwd2", "admin")
 		).collect(Collectors.toList());
 		userRepository.saveAll(user);
 		System.out.println(userRepository.findAll());
