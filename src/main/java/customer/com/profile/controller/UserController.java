@@ -21,15 +21,10 @@ public class UserController {
 
     @PostMapping("/authenticate")
     public JwtResponse generateToken(@RequestBody User user) throws Exception {
-        try {
-            UserDetail userDetail = customUserDetailsService.loadUserByUsername(user.getUserName());
+        UserDetail userDetail = customUserDetailsService.loadUserByUsername(user.getUserName());
             if (Objects.equals(userDetail.getPassword(), user.getPassword())){
                 System.out.println(userDetail.getUsername() + " "+ "exist in the database");
             }
-
-        } catch (Exception ex) {
-            throw new RuntimeException("user does not exit in the database");
-        }
         return new JwtResponse(jwtUtil.generateToken(user.getUserName(), user.getRole()));
     }
 }
