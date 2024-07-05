@@ -20,7 +20,7 @@ public class UserController {
     private CustomUserDetailsService customUserDetailsService;
 
     @PostMapping("/authenticate")
-    public JwtResponse generateToken(@RequestBody User user) throws Exception {
+    public JwtResponse generateToken(@RequestBody User user) {
         UserDetail userDetail = customUserDetailsService.loadUserByUsername(user.getUserName());
             if (Objects.equals(userDetail.getPassword(), user.getPassword())){
                 System.out.println(userDetail.getUsername() + " "+ "exist in the database");
