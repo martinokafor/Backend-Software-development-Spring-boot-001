@@ -1,6 +1,7 @@
 package customer.com.profile.controller;
 
 import customer.com.profile.model.Customer;
+import customer.com.profile.model.Order;
 import customer.com.profile.model.Vehicle;
 import customer.com.profile.service.VehicleService;
 import org.junit.jupiter.api.AfterEach;
@@ -40,6 +41,14 @@ class VehicleControllerTest {
             city(CUSTOMER_CITY).
             customerId(1).
             noOfVehicle(1).
+            build();
+
+    Order order = Order.builder().
+            orderId(1).
+            brand(CUSTOMER_NAME).
+            price(CUSTOMER_CITY).
+            currency("Euro").
+            consent(true).
             build();
 
     Vehicle firstVehicle = Vehicle.builder().
@@ -88,7 +97,7 @@ class VehicleControllerTest {
 
     @Test
     void createVehicle() throws Exception {
-        Mockito.when(vehicleService.CreateVehicle(secondVehicle, customer.getCustomerId())).thenReturn(secondVehicle);
+        Mockito.when(vehicleService.CreateVehicle(secondVehicle, customer.getCustomerId(), order.getOrderId())).thenReturn(secondVehicle);
         mockMvc.perform(MockMvcRequestBuilders.post("/vehicle/customer/2")
                         .contentType(MediaType.APPLICATION_JSON).content("{\n" +
                                 "    \"vehicleName\": \"Honda\",\n" +

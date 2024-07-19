@@ -140,10 +140,10 @@ public class VehicleController {
                     ),
             }
     )
-    @PostMapping("/vehicle/customer/{customerId}")
-    public ResponseEntity<Vehicle> createVehicle(@Valid @RequestBody Vehicle vehicle, @PathVariable Integer customerId){
+    @PostMapping("/vehicle/customer/{customerId}/order/{orderId}")
+    public ResponseEntity<Vehicle> createVehicle(@Valid @RequestBody Vehicle vehicle, @PathVariable Integer customerId, @PathVariable Integer orderId){
         try{
-            return new ResponseEntity<Vehicle>(vehicleService.CreateVehicle(vehicle, customerId), HttpStatus.CREATED);
+            return new ResponseEntity<Vehicle>(vehicleService.CreateVehicle(vehicle, customerId, orderId), HttpStatus.CREATED);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

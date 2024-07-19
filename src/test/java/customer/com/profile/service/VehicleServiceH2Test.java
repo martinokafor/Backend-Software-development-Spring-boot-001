@@ -2,6 +2,7 @@ package customer.com.profile.service;
 
 import customer.com.profile.config.VehicleConfig;
 import customer.com.profile.model.Customer;
+import customer.com.profile.model.Order;
 import customer.com.profile.model.Vehicle;
 import customer.com.profile.service.CustomerService;
 import customer.com.profile.service.VehicleService;
@@ -38,6 +39,13 @@ public class VehicleServiceH2Test {
             noOfVehicle(1).
             build();
 
+    Order order = Order.builder().
+            brand(CUSTOMER_NAME).
+            price(CUSTOMER_CITY).
+            currency("Euro").
+            consent(true).
+            build();
+
     Vehicle firstVehicle = Vehicle.builder().
             vehicleName(FIRST_VEHICLE_NAME).
             model(FIRST_VEHICLE_MODEL).
@@ -52,8 +60,8 @@ public class VehicleServiceH2Test {
     @BeforeEach
     void setUp() {
         Customer createCustomer = customerService.CreateCustomer(customer);
-        vehicleService.CreateVehicle(firstVehicle, createCustomer.getCustomerId());
-        vehicleService.CreateVehicle(secondVehicle, createCustomer.getCustomerId());
+        vehicleService.CreateVehicle(firstVehicle, createCustomer.getCustomerId(), order.getOrderId());
+        vehicleService.CreateVehicle(secondVehicle, createCustomer.getCustomerId(), order.getOrderId());
     }
 
     @AfterEach
@@ -76,8 +84,8 @@ public class VehicleServiceH2Test {
     @Test
     void createVehicle(){
         Customer createCustomer = customerService.CreateCustomer(customer);
-        vehicleService.CreateVehicle(firstVehicle, createCustomer.getCustomerId());
-        vehicleService.CreateVehicle(secondVehicle, createCustomer.getCustomerId());
+        vehicleService.CreateVehicle(firstVehicle, createCustomer.getCustomerId(), order.getOrderId());
+        vehicleService.CreateVehicle(secondVehicle, createCustomer.getCustomerId(), order.getOrderId());
     }
 
     @Test
@@ -101,7 +109,7 @@ public class VehicleServiceH2Test {
     @Test
     void deleteVehicleByVin(){
         Customer createCustomer = customerService.CreateCustomer(customer);
-        Vehicle createdVehicle = vehicleService.CreateVehicle(firstVehicle, createCustomer.getCustomerId());
+        Vehicle createdVehicle = vehicleService.CreateVehicle(firstVehicle, createCustomer.getCustomerId(), order.getOrderId());
         double deletedVehicle = vehicleService.deleteVehicleByVin(createdVehicle.getVin());
         assertEquals(deletedVehicle, 0);
     }

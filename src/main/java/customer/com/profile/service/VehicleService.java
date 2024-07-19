@@ -1,8 +1,10 @@
 package customer.com.profile.service;
 
 import customer.com.profile.model.Customer;
+import customer.com.profile.model.Order;
 import customer.com.profile.model.Vehicle;
 import customer.com.profile.repository.CustomerRepository;
+import customer.com.profile.repository.OrderRepository;
 import customer.com.profile.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,12 +18,17 @@ public class VehicleService {
     @Autowired
     CustomerRepository customerRepository;
 
+    @Autowired
+    OrderRepository orderRepository;
+
     public List<Vehicle> fetchAllVehicles(){
         return vehicleRepository.findAll();
     }
-    public Vehicle CreateVehicle(Vehicle vehicle, Integer customerId){
+    public Vehicle CreateVehicle(Vehicle vehicle, Integer customerId, Integer orderId){
         Customer customer = customerRepository.findById(customerId).get();
         vehicle.setCustomer(customer);
+        Order order = orderRepository.findById(orderId).get();
+        vehicle.setOrder(order);
         Integer noOfVehicle;
         noOfVehicle = vehicleRepository.findByCustomerId(customerId).size();
         customer.setNoOfVehicle(noOfVehicle + 1);

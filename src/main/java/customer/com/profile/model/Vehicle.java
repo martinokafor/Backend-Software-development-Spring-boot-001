@@ -28,4 +28,8 @@ public class Vehicle extends AbstractEntity{
     @ManyToOne(optional = false, cascade = CascadeType.MERGE)
     @JoinColumn(name = "customer_id", referencedColumnName = "customerId")
     private Customer customer;
+
+    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "order_id", referencedColumnName = "orderId")
+    private Order order;
 }
