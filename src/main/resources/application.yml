@@ -8,7 +8,7 @@ spring:
     password: password
   jpa:
     hibernate:
-      ddl-auto: create-drop     # create-drop
+      ddl-auto: create     # create-drop
     show-sql: true
   enabled: true
   spring-test:

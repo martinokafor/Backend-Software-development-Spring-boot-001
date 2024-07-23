@@ -25,7 +25,9 @@ public class CustomerUsersService {
 
     public CustomerUsers updateCustomerUsers(Integer id, List<Vehicle> vin){
         CustomerUsers customerUsers = customerUsersRepository.findById(id).get();
-        customerUsers.setVehicle(vin);
+        List<Vehicle> vehicle = customerUsers.getVehicle();
+        vehicle.addAll(vin);
+        customerUsers.setVehicle(vehicle);
         return customerUsersRepository.save(customerUsers);
     }
 

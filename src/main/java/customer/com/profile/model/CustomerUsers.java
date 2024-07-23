@@ -12,6 +12,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Builder
 @Table(name="customer_users")
 public class CustomerUsers {
     @Id
@@ -24,7 +25,7 @@ public class CustomerUsers {
     @JoinColumn(name = "customer_id", referencedColumnName = "customerId")
     private Customer customer;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_vehicle",
             joinColumns = @JoinColumn(
                     name = "user_id",

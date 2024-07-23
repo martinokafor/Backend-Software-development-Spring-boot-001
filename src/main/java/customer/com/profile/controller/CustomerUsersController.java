@@ -27,8 +27,7 @@ public class CustomerUsersController {
         }
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping("/user/{id}/vehicle/{vin}")
+    @PutMapping("/user/{id}/vehicle/{vin}")
     public ResponseEntity<CustomerUsers> updateCustomerUsers(@PathVariable Integer id, @PathVariable List<Vehicle> vin){
         try{
             return new ResponseEntity<CustomerUsers>(customerUsersService.updateCustomerUsers(id, vin), HttpStatus.OK);
