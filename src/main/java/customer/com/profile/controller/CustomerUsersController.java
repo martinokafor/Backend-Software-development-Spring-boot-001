@@ -1,5 +1,8 @@
 package customer.com.profile.controller;
 
+import customer.com.profile.dto.UsersOfAVehicleDto;
+import customer.com.profile.mapper.UsersOfAVehicleMapper;
+import customer.com.profile.model.Customer;
 import customer.com.profile.model.CustomerUsers;
 import customer.com.profile.model.Vehicle;
 import customer.com.profile.service.CustomerUsersService;
@@ -35,6 +38,38 @@ public class CustomerUsersController {
             throw new RuntimeException(e);
         }
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/users/vin/{vin}")
+    public ResponseEntity<List<UsersOfAVehicleDto>> findAllUsersOfVehicle(@PathVariable String vin){
+        try{
+            List<CustomerUsers> customerUsers = customerUsersService.findAllUsersOfAVehicle(vin);
+            return new ResponseEntity<>(new UsersOfAVehicleMapper().userOfAVehicle(customerUsers), HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/username/vin/{vin}")
+    public ResponseEntity<List<String>> findAllUserNameOfVehicle(@PathVariable String vin){
+        try{
+            return new ResponseEntity<>(customerUsersService.findAllUserNamesOfAVehicle(vin), HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/user/{userId}/vin/{vin}")
+    public ResponseEntity<Integer> findNoOfTimesForAVehicleByAUser(@PathVariable Integer userId, @PathVariable String vin){
+        try{
+            return new ResponseEntity<>(customerUsersService.findNoOfTimesForAVehicleByAUser(userId, vin), HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @GetMapping("/user/customer/{customerId}")
     public ResponseEntity<List<CustomerUsers>> getCustomerUsers(@PathVariable Integer customerId){
         try {
@@ -42,5 +77,5 @@ public class CustomerUsersController {
         }catch(Exception e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        }
+    }
 }

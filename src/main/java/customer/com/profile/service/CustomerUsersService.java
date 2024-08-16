@@ -8,7 +8,9 @@ import customer.com.profile.repository.CustomerUsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class CustomerUsersService {
@@ -33,5 +35,22 @@ public class CustomerUsersService {
 
     public List<CustomerUsers> getCustomerUsers(Integer customerId){
         return customerUsersRepository.findCustomerUsersByCustomerId(customerId);
+    }
+
+    public List<CustomerUsers> findAllUsersOfAVehicle(String vin){
+        return customerUsersRepository.findAllUsersOfVehicle(vin);
+    }
+
+    public List<String> findAllUserNamesOfAVehicle(String vin){
+        List <CustomerUsers> customerUsers = customerUsersRepository.findAllUsersOfVehicle(vin);
+        List <String> userName = new ArrayList<>();
+        for(CustomerUsers user: customerUsers){
+            userName.add(user.getUserName());
+        }
+        return userName;
+    }
+
+    public Integer findNoOfTimesForAVehicleByAUser(Integer userId, String vin){
+        return customerUsersRepository.findNoOfTimesForAVehicleByAUser(userId, vin);
     }
 }

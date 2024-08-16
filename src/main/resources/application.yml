@@ -8,6 +8,29 @@ spring:
     password: password
   jpa:
     hibernate:
+      ddl-auto: update     # create-drop
+    show-sql: true
+  enabled: true
+  spring-test:
+    vehicles:
+      maxNoOfVehicles: 20
+      enabled: true
+    customers:
+      maxNoOfCustomers: 20
+      enabled: true
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: mysql-test
+  datasource:
+    url: jdbc:mysql://localhost:3306/customerDatabase
+    username: root
+    password: password
+  jpa:
+    hibernate:
       ddl-auto: create     # create-drop
     show-sql: true
   enabled: true

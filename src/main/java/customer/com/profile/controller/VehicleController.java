@@ -1,6 +1,7 @@
 package customer.com.profile.controller;
 
 import customer.com.profile.config.ApiError;
+import customer.com.profile.dto.VehicleOfUserDto;
 import customer.com.profile.model.Vehicle;
 import customer.com.profile.service.VehicleService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,8 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.stream.Collectors;
+import customer.com.profile.mapper.VehicleOfUserMapper;
+
+import static java.util.stream.Collectors.toList;
 
 @RestController
 public class VehicleController {
@@ -404,6 +410,26 @@ public class VehicleController {
             new ResponseEntity<>(vehicleService.deleteVehicleByVin(vin), HttpStatus.OK);
         }catch (Exception e){
             new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/vin/user/{userId}")
+    public ResponseEntity<List<String>> findAllVINsOfAUser(@PathVariable Integer userId){
+        try {
+            return new ResponseEntity<>(vehicleService.findAllVINsOfAUser(userId), HttpStatus.OK);
+        }catch (Exception e){
+           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/vehicle/user/{userId}")
+    public ResponseEntity<List<VehicleOfUserDto>> findAllVehiclesOfAUser(@PathVariable Integer userId){
+        try {
+            List<Vehicle> vehicles = vehicleService.findAllVehiclesOfAUser(userId);
+            return new ResponseEntity<>(new VehicleOfUserMapper().vehicleOfUser(vehicles), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 }

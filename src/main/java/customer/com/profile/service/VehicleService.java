@@ -1,5 +1,6 @@
 package customer.com.profile.service;
 
+import customer.com.profile.dto.VehicleOfUserDto;
 import customer.com.profile.model.Customer;
 import customer.com.profile.model.Order;
 import customer.com.profile.model.Vehicle;
@@ -9,6 +10,7 @@ import customer.com.profile.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -67,6 +69,19 @@ public class VehicleService {
     public Integer deleteVehicleByVin(String vin){
         vehicleRepository.deleteById(vin);
         return 0;
+    }
+
+    public List<String> findAllVINsOfAUser(Integer userId){
+         List<Vehicle> vehicle = vehicleRepository.findVehicleOfAUser(userId);
+         List<String> vin = new ArrayList<>();
+         for (Vehicle vin1: vehicle){
+             vin.add(vin1.getVin());
+         }
+        return vin;
+    }
+
+    public List<Vehicle> findAllVehiclesOfAUser(Integer userId){
+        return vehicleRepository.findVehicleOfAUser1(userId);
     }
 
 }
