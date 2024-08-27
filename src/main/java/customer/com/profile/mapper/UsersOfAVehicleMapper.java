@@ -11,13 +11,20 @@ import java.util.List;
 public class UsersOfAVehicleMapper {
     public List<UsersOfAVehicleDto> userOfAVehicle(List<CustomerUsers> customerUsers){
         List<UsersOfAVehicleDto> usersOfAVehicleList = new ArrayList<>();
-        for (CustomerUsers user: customerUsers){
-            UsersOfAVehicleDto usersOfAVehicleDto = new UsersOfAVehicleDto(
+        customerUsers.forEach((CustomerUsers user) ->{
+                    UsersOfAVehicleDto usersOfAVehicleDto = new UsersOfAVehicleDto(
                     user.getUserName(),
                     user.getPassword()
             );
-            usersOfAVehicleList.add(usersOfAVehicleDto);
-        }
+                usersOfAVehicleList.add(usersOfAVehicleDto);}
+        );
+//        for (CustomerUsers user: customerUsers){
+//            UsersOfAVehicleDto usersOfAVehicleDto = new UsersOfAVehicleDto(
+//                    user.getUserName(),
+//                    user.getPassword()
+//            );
+//            usersOfAVehicleList.add(usersOfAVehicleDto);
+//        }
         return usersOfAVehicleList;
     }
 }
