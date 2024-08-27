@@ -12,14 +12,16 @@ public class VehicleOfUserMapper {
     public List<VehicleOfUserDto> vehicleOfUser(List<Vehicle> vehicle) {
         List<VehicleOfUserDto> vehicleOfUserDtoList = new ArrayList<>();
         System.out.println(vehicle);
-        for (Vehicle vehicleOfUser: vehicle) {
-            VehicleOfUserDto vehicleOfUserDto = new VehicleOfUserDto(
+        vehicle.forEach((Vehicle vehicleOfUser) -> {
+                    VehicleOfUserDto vehicleOfUserDto = new VehicleOfUserDto(
                     vehicleOfUser.getVehicleName(),
                     vehicleOfUser.getVin(),
                     vehicleOfUser.getModel()
-            );
-            vehicleOfUserDtoList.add(vehicleOfUserDto);
-        }
+
+                    );
+                    vehicleOfUserDtoList.add(vehicleOfUserDto);
+                }
+        );
         System.out.println(vehicleOfUserDtoList);
         return vehicleOfUserDtoList;
     }
