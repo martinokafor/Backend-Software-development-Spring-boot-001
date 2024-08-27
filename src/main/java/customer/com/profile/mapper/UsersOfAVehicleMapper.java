@@ -18,13 +18,6 @@ public class UsersOfAVehicleMapper {
             );
                 usersOfAVehicleList.add(usersOfAVehicleDto);}
         );
-//        for (CustomerUsers user: customerUsers){
-//            UsersOfAVehicleDto usersOfAVehicleDto = new UsersOfAVehicleDto(
-//                    user.getUserName(),
-//                    user.getPassword()
-//            );
-//            usersOfAVehicleList.add(usersOfAVehicleDto);
-//        }
         return usersOfAVehicleList;
     }
 }
