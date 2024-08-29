@@ -13,8 +13,8 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name="USER_TBL")
-public class User{
+@Table(name = "USER_TBL")
+public class User {
     @Id
     private Integer id;
     private String userName;

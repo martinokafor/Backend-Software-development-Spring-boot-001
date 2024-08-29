@@ -33,19 +33,19 @@ public class CustomerService {
 
     private final String FILE_PATH = "C:\\E2E\\Backend-Software-development-Spring-boot-001\\";
 
-    public List<Customer> fetchAllCustomers(){
+    public List<Customer> fetchAllCustomers() {
         return customerRepository.findAll();
     }
 
-    public Customer CreateCustomer(Customer customer){
+    public Customer CreateCustomer(Customer customer) {
         return customerRepository.save(customer);
     }
 
-    public Customer getCustomer(Integer customerId){
+    public Customer getCustomer(Integer customerId) {
         return customerRepository.findById(customerId).get();
     }
 
-    public Customer updateCustomer(Customer customer, Integer customerId){
+    public Customer updateCustomer(Customer customer, Integer customerId) {
         customerRepository.findById(customerId).get();
         customer.setCustomerId(customer.getCustomerId());
         customer.setCustomerName(customer.getCustomerName());
@@ -57,16 +57,16 @@ public class CustomerService {
         return customer;
     }
 
-    public double deleteCustomer(Integer customerId){
+    public double deleteCustomer(Integer customerId) {
         customerRepository.deleteById(customerId);
         return 0;
     }
 
-    public List<Customer> findByCity(String city){
+    public List<Customer> findByCity(String city) {
         return customerRepository.findByCity(city);
     }
 
-    public List<Customer> findByCustomerName(String customerName){
+    public List<Customer> findByCustomerName(String customerName) {
         return customerRepository.findByCustomerName(customerName);
     }
 
@@ -74,15 +74,15 @@ public class CustomerService {
         CSVReader reader = new CSVReader(new FileReader(FILE_PATH + file.getOriginalFilename()));
         reader.skip(1);
         List<String[]> rows = reader.readAll();
-        for (String[] row : rows){
+        for (String[] row: rows) {
             Customer customer = new Customer();
             customer.setCity(row[0]);
             customer.setCreatedOn(Instant.parse(row[1]));
             customer.setCustomerId(Integer.valueOf(row[2]));
             customer.setCustomerName(row[3]);
-            if (row[4].isEmpty()){
+            if (row[4].isEmpty()) {
                 customer.setNoOfVehicle(null);
-            }else{
+            } else {
                 customer.setNoOfVehicle(Integer.valueOf(row[4]));
             }
 
@@ -90,7 +90,8 @@ public class CustomerService {
             customerRepository.save(customer);
         }
     }
-    public Object[] consumeCustomerProducers(){
+
+    public Object[] consumeCustomerProducers() {
 
         Object[] customer = webClient.get()
                 .uri("http://localhost:8084/customer_producers")
@@ -102,7 +103,8 @@ public class CustomerService {
         System.out.println("request was sent");
         return customer;
     }
-    public Object produceCustomerProducers(Customer customer){
+
+    public Object produceCustomerProducers(Customer customer) {
 
         Object customerResponse = webClient.post()
                 .uri("http://localhost:8084/customer_producer")

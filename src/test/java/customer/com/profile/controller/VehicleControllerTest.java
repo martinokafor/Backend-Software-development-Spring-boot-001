@@ -80,7 +80,7 @@ class VehicleControllerTest {
     void fetchAllVehicle() throws Exception {
         Mockito.when(vehicleService.fetchAllVehicles()).thenReturn(vehicles);
         mockMvc.perform(MockMvcRequestBuilders.get("/vehicles")
-                        .contentType(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));
     }
@@ -89,7 +89,7 @@ class VehicleControllerTest {
     void getVehicle() throws Exception {
         Mockito.when(vehicleService.getVehicle(firstVehicle.getVin())).thenReturn(firstVehicle);
         mockMvc.perform(MockMvcRequestBuilders.get("/vehicle/vin/6c628184-bb2a-4114-bc71-a3dc328d7136")
-                        .contentType(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(jsonPath("$.vin").value(firstVehicle.getVin()))
                 .andExpect(jsonPath("$.*", hasSize(6)));
@@ -99,10 +99,10 @@ class VehicleControllerTest {
     void createVehicle() throws Exception {
         Mockito.when(vehicleService.CreateVehicle(secondVehicle, customer.getCustomerId(), order.getOrderId())).thenReturn(secondVehicle);
         mockMvc.perform(MockMvcRequestBuilders.post("/vehicle/customer/2")
-                        .contentType(MediaType.APPLICATION_JSON).content("{\n" +
-                                "    \"vehicleName\": \"Honda\",\n" +
-                                "    \"model\": \"accord\"\n" +
-                                "}"))
+                .contentType(MediaType.APPLICATION_JSON).content("{\n" +
+                "    \"vehicleName\": \"Honda\",\n" +
+                "    \"model\": \"accord\"\n" +
+                "}"))
                 .andExpect(MockMvcResultMatchers.status().isCreated());
     }
 
@@ -110,7 +110,7 @@ class VehicleControllerTest {
     void findVehicleByName() throws Exception {
         Mockito.when(vehicleService.findAllByVehicleName(secondVehicle.getVehicleName())).thenReturn(vehicles);
         mockMvc.perform(MockMvcRequestBuilders.get("/vehicle/vehicle_name/Honda")
-                        .contentType(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(jsonPath("$[0].vehicleName").value(firstVehicle.getVehicleName()))
                 .andExpect(jsonPath("$[1].vehicleName").value(secondVehicle.getVehicleName()))
@@ -121,7 +121,7 @@ class VehicleControllerTest {
     void findVehiclesByCustomerId() throws Exception {
         Mockito.when(vehicleService.findVehiclesByCustomerId(customer.getCustomerId())).thenReturn(vehicles);
         mockMvc.perform(MockMvcRequestBuilders.get("/vehicles/customer_id/1")
-                        .contentType(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));
     }
@@ -130,7 +130,7 @@ class VehicleControllerTest {
     void countVehiclesByCustomerId() throws Exception {
         Mockito.when(vehicleService.countVehiclesByCustomerId(customer.getCustomerId())).thenReturn(2);
         mockMvc.perform(MockMvcRequestBuilders.get("/vehicles/1")
-                        .contentType(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(jsonPath("$").value(2));
     }
@@ -140,7 +140,7 @@ class VehicleControllerTest {
         Mockito.when(
                 vehicleService.deleteVehicleByVin(firstVehicle.getVin())).getMock();
         mockMvc.perform(MockMvcRequestBuilders.delete("/vehicle/6c628184-bb2a-4114-bc71-a3dc328d7136")
-                        .contentType(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 }

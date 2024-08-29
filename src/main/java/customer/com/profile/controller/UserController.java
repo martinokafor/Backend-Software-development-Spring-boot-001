@@ -22,9 +22,9 @@ public class UserController {
     @PostMapping("/authenticate")
     public JwtResponse generateToken(@RequestBody User user) {
         UserDetail userDetail = customUserDetailsService.loadUserByUsername(user.getUserName());
-            if (Objects.equals(userDetail.getPassword(), user.getPassword())){
-                System.out.println(userDetail.getUsername() + " "+ "exist in the database");
-            }
+        if (Objects.equals(userDetail.getPassword(), user.getPassword())) {
+            System.out.println(userDetail.getUsername() + " " + "exist in the database");
+        }
         return new JwtResponse(jwtUtil.generateToken(user.getUserName(), user.getRole()));
     }
 }

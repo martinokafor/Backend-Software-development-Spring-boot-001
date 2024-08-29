@@ -19,13 +19,13 @@ public class CustomerUsersService {
     @Autowired
     CustomerRepository customerRepository;
 
-    public CustomerUsers createCustomerUsers(CustomerUsers customerUsers, Integer customerId){
+    public CustomerUsers createCustomerUsers(CustomerUsers customerUsers, Integer customerId) {
         Customer customer = customerRepository.findById(customerId).get();
         customerUsers.setCustomer(customer);
         return customerUsersRepository.save(customerUsers);
     }
 
-    public CustomerUsers updateCustomerUsers(Integer id, List<Vehicle> vin){
+    public CustomerUsers updateCustomerUsers(Integer id, List<Vehicle> vin) {
         CustomerUsers customerUsers = customerUsersRepository.findById(id).get();
         List<Vehicle> vehicle = customerUsers.getVehicle();
         vehicle.addAll(vin);
@@ -33,24 +33,24 @@ public class CustomerUsersService {
         return customerUsersRepository.save(customerUsers);
     }
 
-    public List<CustomerUsers> getCustomerUsers(Integer customerId){
+    public List<CustomerUsers> getCustomerUsers(Integer customerId) {
         return customerUsersRepository.findCustomerUsersByCustomerId(customerId);
     }
 
-    public List<CustomerUsers> findAllUsersOfAVehicle(String vin){
+    public List<CustomerUsers> findAllUsersOfAVehicle(String vin) {
         return customerUsersRepository.findAllUsersOfVehicle(vin);
     }
 
-    public List<String> findAllUserNamesOfAVehicle(String vin){
-        List <CustomerUsers> customerUsers = customerUsersRepository.findAllUsersOfVehicle(vin);
-        List <String> userName = new ArrayList<>();
-        for(CustomerUsers user: customerUsers){
+    public List<String> findAllUserNamesOfAVehicle(String vin) {
+        List<CustomerUsers> customerUsers = customerUsersRepository.findAllUsersOfVehicle(vin);
+        List<String> userName = new ArrayList<>();
+        for (CustomerUsers user: customerUsers) {
             userName.add(user.getUserName());
         }
         return userName;
     }
 
-    public Integer findNoOfTimesForAVehicleByAUser(Integer userId, String vin){
+    public Integer findNoOfTimesForAVehicleByAUser(Integer userId, String vin) {
         return customerUsersRepository.findNoOfTimesForAVehicleByAUser(userId, vin);
     }
 }

@@ -13,13 +13,13 @@ import lombok.*;
 @Builder
 @Table(name = "vehicle")
 @Entity
-public class Vehicle extends AbstractEntity{
+public class Vehicle extends AbstractEntity {
     @NonNull
     @NotEmpty
     @NotBlank
     private String vehicleName;
     @Id
-    @GeneratedValue(strategy= GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String vin;
     @NonNull
     @NotEmpty

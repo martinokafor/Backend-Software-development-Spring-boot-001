@@ -17,7 +17,7 @@ import java.util.*;
 import java.util.function.Function;
 
 @Service
-public class JwtUtil{
+public class JwtUtil {
     @Autowired
     CustomUserDetailsService customUserDetailsService;
 
@@ -40,6 +40,7 @@ public class JwtUtil{
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
+
     private Claims extractAllClaims(String token) {
         return Jwts.parserBuilder().setSigningKey(secret).build().parseClaimsJws(token).getBody();
     }

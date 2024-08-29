@@ -37,34 +37,34 @@ public class VehicleController {
                             description = "Bad request",
                             responseCode = "400",
                             content =
-                            @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = ApiError.class))
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = ApiError.class))
 
                     ),
                     @ApiResponse(
                             description = "Unauthorized",
                             responseCode = "401",
                             content =
-                            @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = ApiError.class))
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = ApiError.class))
                     ),
                     @ApiResponse(
                             description = "Internal server error",
                             responseCode = "500",
                             content =
-                            @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = ApiError.class))
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = ApiError.class))
                     ),
             }
     )
     @GetMapping("/vehicles")
     public List<Vehicle> fetchAllVehicle() {
-        try{
+        try {
             return vehicleService.fetchAllVehicles();
-        }catch(Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
@@ -80,34 +80,34 @@ public class VehicleController {
                             description = "Bad request",
                             responseCode = "400",
                             content =
-                            @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = ApiError.class))
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = ApiError.class))
 
                     ),
                     @ApiResponse(
                             description = "Unauthorized",
                             responseCode = "401",
                             content =
-                            @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = ApiError.class))
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = ApiError.class))
                     ),
                     @ApiResponse(
                             description = "Internal server error",
                             responseCode = "500",
                             content =
-                            @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = ApiError.class))
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = ApiError.class))
                     ),
             }
     )
     @GetMapping("/vehicle/vin/{vin}")
-    public ResponseEntity<Vehicle> getVehicle(@PathVariable String vin){
+    public ResponseEntity<Vehicle> getVehicle(@PathVariable String vin) {
         try {
             return new ResponseEntity<Vehicle>(vehicleService.getVehicle(vin), HttpStatus.OK);
-        }catch(Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
@@ -123,32 +123,32 @@ public class VehicleController {
                             description = "Bad request",
                             responseCode = "400",
                             content =
-                            @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = ApiError.class))
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = ApiError.class))
 
                     ),
                     @ApiResponse(
                             description = "Unauthorized",
                             responseCode = "401",
                             content =
-                            @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = ApiError.class))
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = ApiError.class))
                     ),
                     @ApiResponse(
                             description = "Internal server error",
                             responseCode = "500",
                             content =
-                            @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = ApiError.class))
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = ApiError.class))
                     ),
             }
     )
     @PostMapping("/vehicle/customer/{customerId}/order/{orderId}")
-    public ResponseEntity<Vehicle> createVehicle(@Valid @RequestBody Vehicle vehicle, @PathVariable Integer customerId, @PathVariable Integer orderId){
-        try{
+    public ResponseEntity<Vehicle> createVehicle(@Valid @RequestBody Vehicle vehicle, @PathVariable Integer customerId, @PathVariable Integer orderId) {
+        try {
             return new ResponseEntity<Vehicle>(vehicleService.CreateVehicle(vehicle, customerId, orderId), HttpStatus.CREATED);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -166,32 +166,32 @@ public class VehicleController {
                             description = "Bad request",
                             responseCode = "400",
                             content =
-                            @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = ApiError.class))
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = ApiError.class))
 
                     ),
                     @ApiResponse(
                             description = "Unauthorized",
                             responseCode = "401",
                             content =
-                            @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = ApiError.class))
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = ApiError.class))
                     ),
                     @ApiResponse(
                             description = "Internal server error",
                             responseCode = "500",
                             content =
-                            @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = ApiError.class))
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = ApiError.class))
                     ),
             }
     )
     @PutMapping("/vehicle/{vin}")
-    public ResponseEntity<Vehicle> updateVehicle(@Valid @RequestBody Vehicle vehicle, @PathVariable String vin){
-        try{
+    public ResponseEntity<Vehicle> updateVehicle(@Valid @RequestBody Vehicle vehicle, @PathVariable String vin) {
+        try {
             return new ResponseEntity<Vehicle>(vehicleService.updateVehicle(vehicle, vin), HttpStatus.OK);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -209,34 +209,34 @@ public class VehicleController {
                             description = "Bad request",
                             responseCode = "400",
                             content =
-                            @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = ApiError.class))
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = ApiError.class))
 
                     ),
                     @ApiResponse(
                             description = "Unauthorized",
                             responseCode = "401",
                             content =
-                            @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = ApiError.class))
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = ApiError.class))
                     ),
                     @ApiResponse(
                             description = "Internal server error",
                             responseCode = "500",
                             content =
-                            @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = ApiError.class))
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = ApiError.class))
                     ),
             }
     )
     @GetMapping("/vehicle/vehicle_name/{vehicleName}")
-    public ResponseEntity<List<Vehicle>> findVehicleByName(@PathVariable String vehicleName){
+    public ResponseEntity<List<Vehicle>> findVehicleByName(@PathVariable String vehicleName) {
         try {
             return new ResponseEntity<>(vehicleService.findAllByVehicleName(vehicleName), HttpStatus.OK);
-        }catch(Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
@@ -252,34 +252,34 @@ public class VehicleController {
                             description = "Bad request",
                             responseCode = "400",
                             content =
-                            @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = ApiError.class))
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = ApiError.class))
 
                     ),
                     @ApiResponse(
                             description = "Unauthorized",
                             responseCode = "401",
                             content =
-                            @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = ApiError.class))
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = ApiError.class))
                     ),
                     @ApiResponse(
                             description = "Internal server error",
                             responseCode = "500",
                             content =
-                            @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = ApiError.class))
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = ApiError.class))
                     ),
             }
     )
     @GetMapping("/vehicle/model/{model}")
-    public ResponseEntity<List<Vehicle>> findByModel(@PathVariable String model){
+    public ResponseEntity<List<Vehicle>> findByModel(@PathVariable String model) {
         try {
             return new ResponseEntity<>(vehicleService.findByModel(model), HttpStatus.OK);
-        }catch(Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
@@ -295,34 +295,34 @@ public class VehicleController {
                             description = "Bad request",
                             responseCode = "400",
                             content =
-                            @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = ApiError.class))
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = ApiError.class))
 
                     ),
                     @ApiResponse(
                             description = "Unauthorized",
                             responseCode = "401",
                             content =
-                            @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = ApiError.class))
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = ApiError.class))
                     ),
                     @ApiResponse(
                             description = "Internal server error",
                             responseCode = "500",
                             content =
-                            @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = ApiError.class))
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = ApiError.class))
                     ),
             }
     )
     @GetMapping("/vehicles/customer_id/{customerId}")
-    public ResponseEntity<List<Vehicle>> findVehiclesByCustomerId(@PathVariable Integer customerId){
+    public ResponseEntity<List<Vehicle>> findVehiclesByCustomerId(@PathVariable Integer customerId) {
         try {
             return new ResponseEntity<>(vehicleService.findVehiclesByCustomerId(customerId), HttpStatus.OK);
-        }catch(Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
@@ -338,34 +338,34 @@ public class VehicleController {
                             description = "Bad request",
                             responseCode = "400",
                             content =
-                            @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = ApiError.class))
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = ApiError.class))
 
                     ),
                     @ApiResponse(
                             description = "Unauthorized",
                             responseCode = "401",
                             content =
-                            @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = ApiError.class))
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = ApiError.class))
                     ),
                     @ApiResponse(
                             description = "Internal server error",
                             responseCode = "500",
                             content =
-                            @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = ApiError.class))
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = ApiError.class))
                     ),
             }
     )
     @GetMapping("/vehicles/{customerId}")
-    public ResponseEntity<Integer> countVehiclesByCustomerId(@PathVariable Integer customerId){
+    public ResponseEntity<Integer> countVehiclesByCustomerId(@PathVariable Integer customerId) {
         try {
             return new ResponseEntity<>(vehicleService.countVehiclesByCustomerId(customerId), HttpStatus.OK);
-        }catch(Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
@@ -381,54 +381,55 @@ public class VehicleController {
                             description = "Bad request",
                             responseCode = "400",
                             content =
-                            @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = ApiError.class))
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = ApiError.class))
 
                     ),
                     @ApiResponse(
                             description = "Unauthorized",
                             responseCode = "401",
                             content =
-                            @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = ApiError.class))
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = ApiError.class))
                     ),
                     @ApiResponse(
                             description = "Internal server error",
                             responseCode = "500",
                             content =
-                            @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = ApiError.class))
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = ApiError.class))
                     ),
             }
     )
     @DeleteMapping("/vehicle/{vin}")
-    public void deleteCustomer(@PathVariable String vin){
+    public void deleteCustomer(@PathVariable String vin) {
         try {
             new ResponseEntity<>(vehicleService.deleteVehicleByVin(vin), HttpStatus.OK);
-        }catch (Exception e){
+        } catch (Exception e) {
             new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/vin/user/{userId}")
-    public ResponseEntity<List<String>> findAllVINsOfAUser(@PathVariable Integer userId){
+    public ResponseEntity<List<String>> findAllVINsOfAUser(@PathVariable Integer userId) {
         try {
             return new ResponseEntity<>(vehicleService.findAllVINsOfAUser(userId), HttpStatus.OK);
-        }catch (Exception e){
-           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/vehicle/user/{userId}")
-    public ResponseEntity<List<VehicleOfUserDto>> findAllVehiclesOfAUser(@PathVariable Integer userId){
+    public ResponseEntity<List<VehicleOfUserDto>> findAllVehiclesOfAUser(@PathVariable Integer userId) {
         try {
             List<Vehicle> vehicles = vehicleService.findAllVehiclesOfAUser(userId);
             return new ResponseEntity<>(new VehicleOfUserMapper().vehicleOfUser(vehicles), HttpStatus.OK);
-        }catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }

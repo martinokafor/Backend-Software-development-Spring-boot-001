@@ -14,9 +14,9 @@ public class VehicleOfUserMapper {
         System.out.println(vehicle);
         vehicle.forEach((Vehicle vehicleOfUser) -> {
                     VehicleOfUserDto vehicleOfUserDto = new VehicleOfUserDto(
-                    vehicleOfUser.getVehicleName(),
-                    vehicleOfUser.getVin(),
-                    vehicleOfUser.getModel()
+                            vehicleOfUser.getVehicleName(),
+                            vehicleOfUser.getVin(),
+                            vehicleOfUser.getModel()
 
                     );
                     vehicleOfUserDtoList.add(vehicleOfUserDto);

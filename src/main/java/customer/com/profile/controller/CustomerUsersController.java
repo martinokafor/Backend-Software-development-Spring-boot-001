@@ -22,8 +22,8 @@ public class CustomerUsersController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/user/customer/{customerId}")
-    public ResponseEntity<CustomerUsers> createCustomerUsers(@RequestBody CustomerUsers customerUsers, @PathVariable Integer customerId){
-        try{
+    public ResponseEntity<CustomerUsers> createCustomerUsers(@RequestBody CustomerUsers customerUsers, @PathVariable Integer customerId) {
+        try {
             return new ResponseEntity<CustomerUsers>(customerUsersService.createCustomerUsers(customerUsers, customerId), HttpStatus.CREATED);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -31,8 +31,8 @@ public class CustomerUsersController {
     }
 
     @PutMapping("/user/{id}/vehicle/{vin}")
-    public ResponseEntity<CustomerUsers> updateCustomerUsers(@PathVariable Integer id, @PathVariable List<Vehicle> vin){
-        try{
+    public ResponseEntity<CustomerUsers> updateCustomerUsers(@PathVariable Integer id, @PathVariable List<Vehicle> vin) {
+        try {
             return new ResponseEntity<CustomerUsers>(customerUsersService.updateCustomerUsers(id, vin), HttpStatus.OK);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -41,40 +41,40 @@ public class CustomerUsersController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/users/vin/{vin}")
-    public ResponseEntity<List<UsersOfAVehicleDto>> findAllUsersOfVehicle(@PathVariable String vin){
-        try{
+    public ResponseEntity<List<UsersOfAVehicleDto>> findAllUsersOfVehicle(@PathVariable String vin) {
+        try {
             List<CustomerUsers> customerUsers = customerUsersService.findAllUsersOfAVehicle(vin);
             return new ResponseEntity<>(new UsersOfAVehicleMapper().userOfAVehicle(customerUsers), HttpStatus.OK);
-        }catch(Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/username/vin/{vin}")
-    public ResponseEntity<List<String>> findAllUserNameOfVehicle(@PathVariable String vin){
-        try{
+    public ResponseEntity<List<String>> findAllUserNameOfVehicle(@PathVariable String vin) {
+        try {
             return new ResponseEntity<>(customerUsersService.findAllUserNamesOfAVehicle(vin), HttpStatus.OK);
-        }catch(Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/user/{userId}/vin/{vin}")
-    public ResponseEntity<Integer> findNoOfTimesForAVehicleByAUser(@PathVariable Integer userId, @PathVariable String vin){
-        try{
+    public ResponseEntity<Integer> findNoOfTimesForAVehicleByAUser(@PathVariable Integer userId, @PathVariable String vin) {
+        try {
             return new ResponseEntity<>(customerUsersService.findNoOfTimesForAVehicleByAUser(userId, vin), HttpStatus.OK);
-        }catch(Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping("/user/customer/{customerId}")
-    public ResponseEntity<List<CustomerUsers>> getCustomerUsers(@PathVariable Integer customerId){
+    public ResponseEntity<List<CustomerUsers>> getCustomerUsers(@PathVariable Integer customerId) {
         try {
             return new ResponseEntity<List<CustomerUsers>>(customerUsersService.getCustomerUsers(customerId), HttpStatus.OK);
-        }catch(Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }

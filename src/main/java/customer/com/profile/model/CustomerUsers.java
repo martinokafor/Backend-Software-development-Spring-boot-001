@@ -1,4 +1,5 @@
 package customer.com.profile.model;
+
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -13,10 +14,10 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-@Table(name="customer_users")
+@Table(name = "customer_users")
 public class CustomerUsers {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String userName;
     private String password;

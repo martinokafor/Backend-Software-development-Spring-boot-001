@@ -18,22 +18,23 @@ import java.util.stream.Stream;
 @SpringBootApplication
 public class ProfileApplication {
 
-	@Autowired
-	UserRepository userRepository;
+    @Autowired
+    UserRepository userRepository;
 
-	@PostConstruct
-	public void initUsers(){
+    @PostConstruct
+    public void initUsers() {
 
-		List<User> user= Stream.of(
-				new User(1, "user", "pwd", "ADMIN"),
-				new User(2, "user1", "pwd1", "admin"),
-				new User(3, "user2", "pwd2", "admin")
-		).collect(Collectors.toList());
-		userRepository.saveAll(user);
-		System.out.println(userRepository.findAll());
-	}
-	public static void main(String[] args) {
-		SpringApplication.run(ProfileApplication.class, args);
-	}
+        List<User> user = Stream.of(
+                new User(1, "user", "pwd", "ADMIN"),
+                new User(2, "user1", "pwd1", "admin"),
+                new User(3, "user2", "pwd2", "admin")
+        ).collect(Collectors.toList());
+        userRepository.saveAll(user);
+        System.out.println(userRepository.findAll());
+    }
+
+    public static void main(String[] args) {
+        SpringApplication.run(ProfileApplication.class, args);
+    }
 
 }

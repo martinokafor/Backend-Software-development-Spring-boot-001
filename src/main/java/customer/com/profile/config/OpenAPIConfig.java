@@ -11,16 +11,16 @@ import io.swagger.v3.oas.annotations.servers.Servers;
         version = "V1.0"
 ),
         servers = {
-        @Server(
-                description = "DEV",
-                url = "http://localhost:8080"
+                @Server(
+                        description = "DEV",
+                        url = "http://localhost:8080"
 
-        ),
-        @Server(
-                description = "PROD",
-                url = "http://localhost:8082"
+                ),
+                @Server(
+                        description = "PROD",
+                        url = "http://localhost:8082"
 
-        )
+                )
 
         }
 

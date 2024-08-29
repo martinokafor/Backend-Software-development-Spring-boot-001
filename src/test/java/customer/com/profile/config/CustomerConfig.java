@@ -16,6 +16,7 @@ public class CustomerConfig {
     public void setMaxNoOfCustomers(String maxNoOfCustomers) {
         this.maxNoOfCustomers = maxNoOfCustomers;
     }
+
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }

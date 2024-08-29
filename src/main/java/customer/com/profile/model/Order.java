@@ -15,7 +15,7 @@ import org.hibernate.envers.Audited;
 @Table(name = "customer_order")
 public class Order {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer orderId;
     String brand;
     String price;

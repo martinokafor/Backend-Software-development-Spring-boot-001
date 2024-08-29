@@ -54,7 +54,7 @@ public class UserServiceMsqlTest {
     }
 
     @Test
-    void createUser(){
+    void createUser() {
         // Order
         Order orderOne = Order.builder().brand("VW").
                 price("10000").
@@ -136,18 +136,24 @@ public class UserServiceMsqlTest {
         customerUsersService.createCustomerUsers(customerUsersThree, firstCustomer.getCustomerId());
 
         // update users
-        List <Vehicle> vehicleCustomerUserOne = new ArrayList<>(Arrays.asList(vehicleOne, vehicleTwo, vehicleThree));;
+        List<Vehicle> vehicleCustomerUserOne = new ArrayList<>(Arrays.asList(vehicleOne, vehicleTwo, vehicleThree));
+        ;
         customerUsersService.updateCustomerUsers(customerUsersOne.getId(), vehicleCustomerUserOne);
-        List <Vehicle> vehicleCustomerUserTwo = new ArrayList<>(Arrays.asList(vehicleOne, vehicleTwo, vehicleThree, vehicleFour));;
+        List<Vehicle> vehicleCustomerUserTwo = new ArrayList<>(Arrays.asList(vehicleOne, vehicleTwo, vehicleThree, vehicleFour));
+        ;
         customerUsersService.updateCustomerUsers(customerUsersTwo.getId(), vehicleCustomerUserTwo);
-        List <Vehicle> vehicleCustomerUserThree = new ArrayList<>(Arrays.asList(vehicleOne, vehicleTwo, vehicleThree, vehicleFour));;
+        List<Vehicle> vehicleCustomerUserThree = new ArrayList<>(Arrays.asList(vehicleOne, vehicleTwo, vehicleThree, vehicleFour));
+        ;
         customerUsersService.updateCustomerUsers(customerUsersThree.getId(), vehicleCustomerUserThree);
 
-        List <Vehicle> vehicleCustomerUserOne1 = new ArrayList<>(Arrays.asList(vehicleOneOrderTwo, vehicleTwo, vehicleThree));;
+        List<Vehicle> vehicleCustomerUserOne1 = new ArrayList<>(Arrays.asList(vehicleOneOrderTwo, vehicleTwo, vehicleThree));
+        ;
         customerUsersService.updateCustomerUsers(customerUsersOne.getId(), vehicleCustomerUserOne1);
-        List <Vehicle> vehicleCustomerUserTwo1 = new ArrayList<>(Arrays.asList(vehicleOneOrderTwo, vehicleTwo, vehicleThree, vehicleFour));;
+        List<Vehicle> vehicleCustomerUserTwo1 = new ArrayList<>(Arrays.asList(vehicleOneOrderTwo, vehicleTwo, vehicleThree, vehicleFour));
+        ;
         customerUsersService.updateCustomerUsers(customerUsersTwo.getId(), vehicleCustomerUserTwo1);
-        List <Vehicle> vehicleCustomerUserThree1 = new ArrayList<>(Arrays.asList(vehicleOneOrderTwo, vehicleTwo, vehicleThree, vehicleFour));;
+        List<Vehicle> vehicleCustomerUserThree1 = new ArrayList<>(Arrays.asList(vehicleOneOrderTwo, vehicleTwo, vehicleThree, vehicleFour));
+        ;
         customerUsersService.updateCustomerUsers(customerUsersThree.getId(), vehicleCustomerUserThree1);
     }
 }

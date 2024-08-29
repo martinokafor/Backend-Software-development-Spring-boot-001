@@ -59,14 +59,14 @@ class CustomerServiceH2Test {
     }
 
     @Test
-    void getCustomer(){
+    void getCustomer() {
         Customer customer = customerService.getCustomer(1);
         assertNotNull(customer);
         assertEquals(customer.getCustomerName(), firstCustomer.getCustomerName());
     }
 
     @Test
-    void createCustomer(){
+    void createCustomer() {
         Customer customer = customerService.CreateCustomer(secondCustomer);
         assertNotNull(customer);
         assertEquals(customer.getCity(), secondCustomer.getCity());
@@ -81,22 +81,22 @@ class CustomerServiceH2Test {
     }
 
     @Test
-    void deleteCustomer(){
+    void deleteCustomer() {
         double deletedCustomer = customerService.deleteCustomer(firstCustomer.getCustomerId());
         assertEquals(deletedCustomer, 0);
     }
 
     @Test
-    void findByCity(){
-        List <Customer> customers = customerService.findByCity(firstCustomer.getCity());
+    void findByCity() {
+        List<Customer> customers = customerService.findByCity(firstCustomer.getCity());
         assertNotNull(customers);
         assertEquals(customers.get(0).getCity(), firstCustomer.getCity());
         assertEquals(customers.get(1).getCity(), secondCustomer.getCity());
     }
 
     @Test
-    void findByCustomerName(){
-        List <Customer> customers = customerService.findByCustomerName(firstCustomer.getCustomerName());
+    void findByCustomerName() {
+        List<Customer> customers = customerService.findByCustomerName(firstCustomer.getCustomerName());
         assertNotNull(customers);
         assertEquals(customers.get(0).getCustomerName(), firstCustomer.getCustomerName());
     }

@@ -68,7 +68,7 @@ class CustomerControllerTest {
     void getCustomer() throws Exception {
         Mockito.when(customerService.getCustomer(firstCustomer.getCustomerId())).thenReturn(firstCustomer);
         mockMvc.perform(MockMvcRequestBuilders.get("/customer/1")
-                        .contentType(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(jsonPath("$.customerId").value(1));
     }
@@ -77,10 +77,10 @@ class CustomerControllerTest {
     void createCustomer() throws Exception {
         Mockito.when(customerService.CreateCustomer(firstCustomer)).thenReturn(firstCustomer);
         mockMvc.perform(MockMvcRequestBuilders.post("/customer")
-                        .contentType(MediaType.APPLICATION_JSON).content("{\n" +
-                                "    \"customerName\": \"Martin E\",\n" +
-                                "    \"city\": \"dresden\"\n" +
-                                "}"))
+                .contentType(MediaType.APPLICATION_JSON).content("{\n" +
+                "    \"customerName\": \"Martin E\",\n" +
+                "    \"city\": \"dresden\"\n" +
+                "}"))
                 .andExpect(MockMvcResultMatchers.status().isCreated());
     }
 
@@ -90,7 +90,7 @@ class CustomerControllerTest {
                 customerService.updateCustomer(
                         secondCustomer, secondCustomer.getCustomerId())).thenReturn(firstCustomer);
         mockMvc.perform(MockMvcRequestBuilders.put("/customer/2")
-                        .contentType(MediaType.APPLICATION_JSON).content("{\n" +
+                .contentType(MediaType.APPLICATION_JSON).content("{\n" +
                 "    \"customerName\": \"Martin E\",\n" +
                 "    \"city\": \"dresden\"\n" +
                 "}"))
@@ -102,7 +102,7 @@ class CustomerControllerTest {
         Mockito.when(
                 customerService.deleteCustomer(secondCustomer.getCustomerId())).getMock();
         mockMvc.perform(MockMvcRequestBuilders.delete("/customer/1")
-                        .contentType(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
@@ -110,7 +110,7 @@ class CustomerControllerTest {
     void findByCity() throws Exception {
         Mockito.when(customerService.findByCity(secondCustomer.getCity())).thenReturn(customers);
         mockMvc.perform(MockMvcRequestBuilders.get("/customer/city/dresden")
-                        .contentType(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(jsonPath("$[0].city").value(firstCustomer.getCity()))
                 .andExpect(jsonPath("$[1].city").value(secondCustomer.getCity()));
@@ -121,7 +121,7 @@ class CustomerControllerTest {
         List<Customer> firstCustomerList = new ArrayList<>(Arrays.asList(firstCustomer));
         Mockito.when(customerService.findByCustomerName(firstCustomer.getCustomerName())).thenReturn(firstCustomerList);
         mockMvc.perform(MockMvcRequestBuilders.get("/customer/customer_name/Martin E")
-                        .contentType(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(jsonPath("$[0].customerName").value(firstCustomer.getCustomerName()));
     }

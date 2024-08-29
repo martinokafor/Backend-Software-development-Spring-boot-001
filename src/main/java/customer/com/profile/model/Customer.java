@@ -17,10 +17,10 @@ import org.hibernate.envers.Audited;
 @Builder
 @Audited
 @Table(name = "customer")
-public class Customer extends AbstractEntity{
+public class Customer extends AbstractEntity {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer customerId;
     @NonNull
     @NotEmpty

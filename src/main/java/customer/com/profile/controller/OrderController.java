@@ -17,8 +17,8 @@ public class OrderController {
     OrderService orderService;
 
     @PostMapping("/order/customer/{customerId}")
-    public ResponseEntity<Order> createCustomerUsers(@RequestBody Order order, @PathVariable Integer customerId){
-        try{
+    public ResponseEntity<Order> createCustomerUsers(@RequestBody Order order, @PathVariable Integer customerId) {
+        try {
             return new ResponseEntity<Order>(orderService.createOrder(order, customerId), HttpStatus.CREATED);
         } catch (Exception e) {
             throw new RuntimeException(e);

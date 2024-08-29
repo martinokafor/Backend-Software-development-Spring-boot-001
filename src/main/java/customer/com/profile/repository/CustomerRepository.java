@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CustomerRepository extends RevisionRepository<Customer,Integer,Integer>, JpaRepository<Customer, Integer> {
+public interface CustomerRepository extends RevisionRepository<Customer, Integer, Integer>, JpaRepository<Customer, Integer> {
     List<Customer> findByCity(String city);
 
     List<Customer> findByCustomerName(String customerName);

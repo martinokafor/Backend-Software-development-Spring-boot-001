@@ -9,14 +9,15 @@ import java.util.List;
 
 @Component
 public class UsersOfAVehicleMapper {
-    public List<UsersOfAVehicleDto> userOfAVehicle(List<CustomerUsers> customerUsers){
+    public List<UsersOfAVehicleDto> userOfAVehicle(List<CustomerUsers> customerUsers) {
         List<UsersOfAVehicleDto> usersOfAVehicleList = new ArrayList<>();
-        customerUsers.forEach((CustomerUsers user) ->{
+        customerUsers.forEach((CustomerUsers user) -> {
                     UsersOfAVehicleDto usersOfAVehicleDto = new UsersOfAVehicleDto(
-                    user.getUserName(),
-                    user.getPassword()
-            );
-                usersOfAVehicleList.add(usersOfAVehicleDto);}
+                            user.getUserName(),
+                            user.getPassword()
+                    );
+                    usersOfAVehicleList.add(usersOfAVehicleDto);
+                }
         );
         return usersOfAVehicleList;
     }

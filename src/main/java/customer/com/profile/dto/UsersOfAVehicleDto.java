@@ -14,8 +14,8 @@ public class UsersOfAVehicleDto {
     public UsersOfAVehicleDto(
             String userName,
             String password
-    ){
-        this.userName=userName;
-        this.password=password;
+    ) {
+        this.userName = userName;
+        this.password = password;
     }
 }

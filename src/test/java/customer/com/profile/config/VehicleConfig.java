@@ -16,6 +16,7 @@ public class VehicleConfig {
     public void setMaxNoOfVehicles(String maxNoOfVehicles) {
         this.maxNoOfVehicles = maxNoOfVehicles;
     }
+
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }

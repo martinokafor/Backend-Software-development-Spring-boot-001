@@ -14,7 +14,7 @@ public class OrderService {
     @Autowired
     CustomerRepository customerRepository;
 
-    public Order createOrder(Order order, Integer customerId){
+    public Order createOrder(Order order, Integer customerId) {
         Customer customer = customerRepository.findById(customerId).get();
         order.setCustomer(customer);
         return orderRepository.save(order);

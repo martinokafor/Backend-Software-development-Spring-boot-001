@@ -70,27 +70,27 @@ public class VehicleServiceH2Test {
 
     @Test
     void fetchAllVehicle() {
-        List <Vehicle> vehicles = vehicleService.fetchAllVehicles();
+        List<Vehicle> vehicles = vehicleService.fetchAllVehicles();
         assertNotNull(vehicles);
         assertTrue(Integer.parseInt(vehicleConfig.getMaxNoOfVehicles()) > vehicles.size());
     }
 
     @Test
-    void getVehicle(){
+    void getVehicle() {
         Vehicle vehicle = vehicleService.getVehicle(firstVehicle.getVin());
         assertEquals(vehicle.getVin(), firstVehicle.getVin());
     }
 
     @Test
-    void createVehicle(){
+    void createVehicle() {
         Customer createCustomer = customerService.CreateCustomer(customer);
         vehicleService.CreateVehicle(firstVehicle, createCustomer.getCustomerId(), order.getOrderId());
         vehicleService.CreateVehicle(secondVehicle, createCustomer.getCustomerId(), order.getOrderId());
     }
 
     @Test
-    void findVehicleByName(){
-        List <Vehicle> vehicle = vehicleService.findAllByVehicleName(SECOND_VEHICLE_NAME );
+    void findVehicleByName() {
+        List<Vehicle> vehicle = vehicleService.findAllByVehicleName(SECOND_VEHICLE_NAME);
         assertEquals(vehicle.get(1).getVehicleName(), firstVehicle.getVehicleName());
     }
 
@@ -101,13 +101,13 @@ public class VehicleServiceH2Test {
     }
 
     @Test
-    void countVehiclesByCustomerId(){
+    void countVehiclesByCustomerId() {
         double vehicleCount = vehicleService.countVehiclesByCustomerId(1);
         assertNotNull(vehicleCount);
     }
 
     @Test
-    void deleteVehicleByVin(){
+    void deleteVehicleByVin() {
         Customer createCustomer = customerService.CreateCustomer(customer);
         Vehicle createdVehicle = vehicleService.CreateVehicle(firstVehicle, createCustomer.getCustomerId(), order.getOrderId());
         double deletedVehicle = vehicleService.deleteVehicleByVin(createdVehicle.getVin());

@@ -66,7 +66,7 @@ public class CustomerIntegrationTest {
 
         TestRestTemplate testRestTemplate = new TestRestTemplate();
         ResponseEntity<String> response = testRestTemplate.
-                postForEntity("http://localhost:8084/customer_producer", firstCustomer,String.class);
+                postForEntity("http://localhost:8084/customer_producer", firstCustomer, String.class);
         System.out.println(response.getBody());
         assertEquals(response.getStatusCode(), HttpStatus.OK);
         assertTrue(response.getBody().contains("city"), String.valueOf(true));

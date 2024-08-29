@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
-public class CustomUserDetailsService implements UserDetailsService{
+public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private UserRepository repository;
 
