@@ -82,7 +82,7 @@ public class VehicleService {
     }
 
     public List<Vehicle> findAllVehiclesOfAUser(Integer userId) {
-        return vehicleRepository.findVehicleOfAUser1(userId);
+        return vehicleRepository.findVehicleOfAUser(userId);
     }
 
 }
