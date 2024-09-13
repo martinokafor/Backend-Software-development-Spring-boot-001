@@ -3,6 +3,7 @@ package customer.com.profile.service;
 import customer.com.profile.config.CustomerConfig;
 import customer.com.profile.config.VehicleConfig;
 import customer.com.profile.model.Customer;
+import customer.com.profile.repository.CustomerRepository;
 import customer.com.profile.service.CustomerService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class CustomerServiceH2Test {
     @Autowired
     private CustomerService customerService;
+    @Autowired
+    CustomerRepository customerRepository;
     @Autowired
     CustomerConfig customerConfig;
     private final String FIRST_CUSTOMER_NAME = "Martin E";
@@ -53,7 +56,7 @@ class CustomerServiceH2Test {
 
     @Test
     void fetchAllCustomer() {
-        List<Customer> customers = customerService.fetchAllCustomers();
+        List<Customer> customers = customerRepository.findAll();
         assertEquals(customers.size(), 2);
         assertTrue(Integer.parseInt(customerConfig.getMaxNoOfCustomers()) > customers.size());
     }
