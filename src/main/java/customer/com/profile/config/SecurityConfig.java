@@ -52,7 +52,8 @@ public class SecurityConfig extends GlobalMethodSecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests().requestMatchers("/authenticate").permitAll()
+        http.csrf().disable().authorizeRequests().requestMatchers("/authenticate", "/swagger-ui/**",
+                        "/swagger-ui.html", "/v3/api-docs/**").permitAll()
                 .anyRequest().authenticated()
                 .and().exceptionHandling().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authenticationProvider(authenticationProvider())

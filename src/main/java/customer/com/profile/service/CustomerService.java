@@ -6,6 +6,10 @@ import customer.com.profile.model.Customer;
 import customer.com.profile.repository.CustomerRepository;
 import customer.com.profile.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -33,8 +37,9 @@ public class CustomerService {
 
     private final String FILE_PATH = "C:\\E2E\\Backend-Software-development-Spring-boot-001\\";
 
-    public List<Customer> fetchAllCustomers() {
-        return customerRepository.findAll();
+    public Page<Customer> fetchAllCustomers(Integer pageNo, Integer pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by("customerName").ascending());
+        return customerRepository.findAll(pageable);
     }
 
     public Customer CreateCustomer(Customer customer) {

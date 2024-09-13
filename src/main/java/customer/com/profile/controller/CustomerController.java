@@ -8,6 +8,7 @@ import com.opencsv.exceptions.CsvException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import customer.com.profile.config.ApiError;
 import customer.com.profile.model.Customer;
+import customer.com.profile.repository.CustomerRepository;
 import customer.com.profile.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -16,6 +17,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -34,6 +36,9 @@ import java.util.List;
 public class CustomerController {
     @Autowired
     CustomerService customerService;
+
+    @Autowired
+    CustomerRepository customerRepository;
 
     @Operation(
             description = "Fetch all commercial customers in the database",
@@ -69,10 +74,12 @@ public class CustomerController {
                     ),
             }
     )
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/customers")
-    public ResponseEntity<List<Customer>> fetchAllCustomer() {
+    public ResponseEntity<Page<Customer>> fetchAllCustomer(@RequestParam(defaultValue = "0") int pageNo,
+                                                           @RequestParam(defaultValue = "4") int pageSize) {
         try {
-            return new ResponseEntity<List<Customer>>(customerService.fetchAllCustomers(), HttpStatus.OK);
+            return new ResponseEntity<Page<Customer>>(customerService.fetchAllCustomers(pageNo, pageSize), HttpStatus.OK);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -349,7 +356,7 @@ public class CustomerController {
                 .withSeparator(CSVWriter.DEFAULT_SEPARATOR)
                 .withOrderedResults(true)
                 .build();
-        writer.write(customerService.fetchAllCustomers());
+        writer.write(customerRepository.findAll());
     }
 
     @ResponseStatus(HttpStatus.CREATED)
