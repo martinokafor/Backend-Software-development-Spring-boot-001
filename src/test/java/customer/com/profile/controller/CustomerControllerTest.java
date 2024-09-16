@@ -1,6 +1,7 @@
 package customer.com.profile.controller;
 
 import customer.com.profile.model.Customer;
+import customer.com.profile.repository.CustomerRepository;
 import customer.com.profile.service.CustomerService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,6 +24,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class CustomerControllerTest {
     @MockBean
     private CustomerService customerService;
+    @MockBean
+    CustomerRepository customerRepository;
 
     @Autowired
     MockMvc mockMvc;
@@ -57,7 +60,7 @@ class CustomerControllerTest {
     @Test
     void fetchAllCustomer() throws Exception {
 
-        Mockito.when(customerService.fetchAllCustomers()).thenReturn(customers);
+        Mockito.when(customerRepository.findAll()).thenReturn(customers);
         mockMvc.perform(MockMvcRequestBuilders.get("/customers")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())

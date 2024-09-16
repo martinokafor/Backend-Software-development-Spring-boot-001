@@ -12,7 +12,6 @@ import org.hibernate.envers.Audited;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Entity
 @Builder
 @Audited

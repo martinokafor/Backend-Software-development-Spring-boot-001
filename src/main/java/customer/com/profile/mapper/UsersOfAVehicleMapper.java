@@ -14,7 +14,7 @@ public class UsersOfAVehicleMapper {
         customerUsers.forEach((CustomerUsers user) -> {
                     UsersOfAVehicleDto usersOfAVehicleDto = new UsersOfAVehicleDto(
                             user.getUserName(),
-                            user.getPassword()
+                            user.getRole()
                     );
                     usersOfAVehicleList.add(usersOfAVehicleDto);
                 }
